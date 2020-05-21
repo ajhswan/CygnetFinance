@@ -6,6 +6,9 @@ npm-debug.log
 *.env
 *.dev
 .DS_Store
+package-lock.json
+.idea/
+react-ui/package-lock.json
 
 # Docker
 Dockerfile

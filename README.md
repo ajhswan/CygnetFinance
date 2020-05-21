@@ -34,8 +34,7 @@ Includes a minimal [Node Cluster](https://nodejs.org/docs/latest-v8.x/api/cluste
 ## Deploy to Heroku
 
 ```bash
-git clone https://github.com/mars/heroku-cra-node.git
-cd heroku-cra-node/
+cd into project root folder
 heroku create
 git push heroku master
 ```
