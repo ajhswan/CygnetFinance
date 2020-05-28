@@ -1,6 +1,7 @@
 # Node build artifacts
 node_modules
 npm-debug.log
+react-ui/src/react-app-env.d.ts
 
 # Local development
 *.env
