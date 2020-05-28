@@ -3,14 +3,15 @@
     "module": "commonjs",
     "strict": true,
     "baseUrl": "./",
-    "outDir": "build",
+    "outDir": "./server",
     "removeComments": true,
     "experimentalDecorators": true,
     "target": "es6",
     "emitDecoratorMetadata": true,
     "moduleResolution": "node",
     "noImplicitReturns": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
     "importHelpers": true,
     "types": [
       "node"
@@ -20,9 +21,10 @@
     ]
   },
   "include": [
-    "./server/src/**/*.ts"
+    "server/ts/**/*.ts"
   ],
   "exclude": [
-    "./src/public/"
+    // "./react-ui/",
+    "node_modules"
   ]
 }
