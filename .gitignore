@@ -7,9 +7,11 @@ react-ui/src/react-app-env.d.ts
 *.env
 *.dev
 .DS_Store
-package-lock.json
+.vscode/
 .idea/
 react-ui/package-lock.json
+package-lock.json
+server/config
 
 # Docker
 Dockerfile

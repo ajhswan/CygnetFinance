@@ -1,6 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const express = require("express");
+const express = require('express');
 const path = require('path');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
@@ -17,14 +16,9 @@ if (!isDev && cluster.isMaster) {
 }
 else {
     const app = express();
+    const routes = require('./api/routes');
     app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
-    app.get('/api', function (req, res) {
-        res.set('Content-Type', 'application/json');
-        res.send('{"message":"Hello from the custom server!"}');
-    });
-    app.get('*', function (request, response) {
-        response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
-    });
+    routes(app);
     app.listen(PORT, function () {
         console.error(`Node ${isDev ? 'dev server' : 'cluster worker ' + process.pid}: listening on port ${PORT}`);
     });

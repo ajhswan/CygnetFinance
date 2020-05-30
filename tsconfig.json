@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "ES6",
     "strict": true,
     "baseUrl": "./",
     "outDir": "./server",
@@ -9,6 +9,7 @@
     "target": "es6",
     "emitDecoratorMetadata": true,
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "noImplicitReturns": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
