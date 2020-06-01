@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "ES6",
+    "module": "CommonJS",
     "strict": true,
     "baseUrl": "./",
     "outDir": "./server",
@@ -9,13 +9,15 @@
     "target": "es6",
     "emitDecoratorMetadata": true,
     "moduleResolution": "node",
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitReturns": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "importHelpers": true,
     "types": [
-      "node"
+      "node",
+      "mongoose"
     ],
     "typeRoots": [
       "node_modules/@types"

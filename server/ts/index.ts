@@ -21,10 +21,13 @@ if (!isDev && cluster.isMaster) {
 } else {
     const app = express();
     const routes = require('./api/routes');
+    const bodyParser = require('body-parser');
+    const DbService = require('./api/Services/DbService');
 
-    // Priority serve any static files.
+
+    app.use(bodyParser.json());
     app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
-
+    DbService.DbConnect();
     routes(app);
 
     app.listen(PORT, function () {
