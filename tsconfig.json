@@ -3,6 +3,9 @@
     "module": "CommonJS",
     "strict": true,
     "baseUrl": "./",
+    "paths": {
+      "@server": ["server/ts/*"]
+    },
     "outDir": "./server",
     "removeComments": true,
     "experimentalDecorators": true,
@@ -17,7 +20,8 @@
     "importHelpers": true,
     "types": [
       "node",
-      "mongoose"
+      "mongoose",
+      "jest"
     ],
     "typeRoots": [
       "node_modules/@types"

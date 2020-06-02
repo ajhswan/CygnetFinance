@@ -15,7 +15,7 @@ interface UserRegErrorValues {
     password2? : string
 }
 
-module.exports = function validateRegisterInput(data: UserRegValues): { errors: UserRegErrorValues, isValid: boolean } {
+function validateRegisterInput(data: UserRegValues): { errors: UserRegErrorValues, isValid: boolean } {
     let errors: UserRegErrorValues = {};
     
     data.name = !isEmpty(data.name) ? data.name : "";
@@ -28,7 +28,7 @@ module.exports = function validateRegisterInput(data: UserRegValues): { errors: 
     }
 
     if (Validator.isEmpty(data.email)) {
-        errors.email = "Email fiedl is required";
+        errors.email = "Email field is required";
     } else if (!Validator.isEmail(data.email)) {
         errors.email = "Email is invalid";
     } 
@@ -38,7 +38,7 @@ module.exports = function validateRegisterInput(data: UserRegValues): { errors: 
     }
 
     if (Validator.isEmpty(data.password2)) {
-        errors.password2 = "Confirm password filed is required";
+        errors.password2 = "Confirm password field is required";
     }
 
     if (!Validator.isLength(data.password, { min: 6, max: 30})) {
@@ -55,3 +55,4 @@ module.exports = function validateRegisterInput(data: UserRegValues): { errors: 
     };
 }
 
+module.exports.validateRegisterInput = validateRegisterInput;

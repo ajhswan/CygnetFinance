@@ -5,7 +5,6 @@ import Mongoose from 'mongoose';
 function DbConnect() :void {
 
     const dbURI: string = require('../../config/keys').MONGODB_URI;
-    console.log(dbURI);
 
     Mongoose
         .connect(dbURI, { useNewUrlParser:true, useUnifiedTopology: true })
