@@ -9,9 +9,9 @@ react-ui/src/react-app-env.d.ts
 .DS_Store
 .vscode/
 .idea/
-react-ui/package-lock.json
 package-lock.json
 server/config
+coverage/
 
 # Docker
 Dockerfile

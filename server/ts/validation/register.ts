@@ -15,7 +15,7 @@ interface UserRegErrorValues {
     password2? : string
 }
 
-function validateRegisterInput(data: UserRegValues): { errors: UserRegErrorValues, isValid: boolean } {
+export default function validateRegisterInput(data: UserRegValues): { errors: UserRegErrorValues, isValid: boolean } {
     let errors: UserRegErrorValues = {};
     
     data.name = !isEmpty(data.name) ? data.name : "";

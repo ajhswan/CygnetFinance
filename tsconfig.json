@@ -21,7 +21,9 @@
     "types": [
       "node",
       "mongoose",
-      "jest"
+      "jest",
+      "validator",
+      "is-empty"
     ],
     "typeRoots": [
       "node_modules/@types"

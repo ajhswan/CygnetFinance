@@ -9,4 +9,8 @@ module.exports = {
     "transform": {
         "^.+\\.(ts|tsx)$": "ts-jest"
     },
+"verbose": true,
+    "collectCoverage": true,
+    "coverageDirectory": "./coverage",
+    "coverageReporters": ["html"]
 }
