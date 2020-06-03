@@ -2,7 +2,7 @@ import Validator from 'validator';
 import isEmpty from 'is-empty';
 import { UserRegValues, UserLoginValues, UserRegErrorValues, UserLoginErrorValues} from '../../types';
 
-export default function validateLoginInput(data: UserLoginValues ) {
+export function validateLoginInput(data: UserLoginValues ) {
     let errors: UserLoginErrorValues = {};
 
     data.email = !isEmpty(data.email) ? data.email : "";
