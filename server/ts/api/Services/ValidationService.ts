@@ -1,21 +1,31 @@
 import Validator from 'validator';
 import isEmpty from 'is-empty';
+import { UserRegValues, UserLoginValues, UserRegErrorValues, UserLoginErrorValues} from '../../types';
 
-interface UserRegValues {
-    name: string,
-    email: string,
-    password: string,
-    password2: string
+export function validateLoginInput(data: UserLoginValues ) {
+    let errors: UserLoginErrorValues = {};
+
+    data.email = !isEmpty(data.email) ? data.email : "";
+    data.password = !isEmpty(data.password) ? data.password : "";
+    
+    if (Validator.isEmpty(data.email)) {
+        errors.email = "Email field is required";
+    } else if (!Validator.isEmail(data.email)) {
+        errors.email = "Email is invalid";
+    }
+
+    if (Validator.isEmpty(data.password)) {
+        errors.password = "Password field is required";
+    }
+
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    };
 }
 
-interface UserRegErrorValues {
-    name? : string,
-    email? : string,
-    password? : string,
-    password2? : string
-}
 
-export default function validateRegisterInput(data: UserRegValues): { errors: UserRegErrorValues, isValid: boolean } {
+export function validateRegisterInput(data: UserRegValues): { errors: UserRegErrorValues, isValid: boolean } {
     let errors: UserRegErrorValues = {};
     
     data.name = !isEmpty(data.name) ? data.name : "";
@@ -55,4 +65,5 @@ export default function validateRegisterInput(data: UserRegValues): { errors: Us
     };
 }
 
+module.exports.validateLoginInput = validateLoginInput
 module.exports.validateRegisterInput = validateRegisterInput;
