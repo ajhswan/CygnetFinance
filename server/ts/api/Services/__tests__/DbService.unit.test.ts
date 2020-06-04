@@ -16,15 +16,15 @@ describe('Connection to database', () => {
             }
             return Promise.resolve(mongoose);
         });
-        const dbURI = 'mongodb://heroku_rn0m35kx:uo484ht45dqne8h69tqku5np5r@ds239368.mlab.com:39368/heroku_rn0m35kx'
-        DbConnect();
+        const dbURI = 'localhost'
+        DbConnect('localhost');
         expect(mongooseConnectSpyOn).toBeCalledWith(
             dbURI,
              { useNewUrlParser:true, useUnifiedTopology: true },
              connectionLogs
               
     );
-    expect(consoleLogSpyOn).toBeCalledWith(`Succesfully connected to ${dbURI}`);
+    expect(consoleLogSpyOn).toBeCalledWith(`Succesfully connected to MongoDB`);
     consoleLogSpyOn.mockRestore();
     });
 
@@ -39,8 +39,8 @@ describe('Connection to database', () => {
             }
             return Promise.resolve(mongoose);
         });
-        const dbURI = 'mongodb://heroku_rn0m35kx:uo484ht45dqne8h69tqku5np5r@ds239368.mlab.com:39368/heroku_rn0m35kx'
-        DbConnect();
+        const dbURI = 'localhost'
+        DbConnect('localhost');
         expect(mongooseConnectSpyOn).toBeCalledWith(
             dbURI,
              { useNewUrlParser:true, useUnifiedTopology: true },

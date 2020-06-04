@@ -17,10 +17,10 @@ describe('Connection to database', () => {
             }
             return Promise.resolve(mongoose_1.default);
         });
-        const dbURI = 'mongodb://heroku_rn0m35kx:uo484ht45dqne8h69tqku5np5r@ds239368.mlab.com:39368/heroku_rn0m35kx';
-        DbService_1.DbConnect();
+        const dbURI = 'localhost';
+        DbService_1.DbConnect('localhost');
         expect(mongooseConnectSpyOn).toBeCalledWith(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, DbService_1.connectionLogs);
-        expect(consoleLogSpyOn).toBeCalledWith(`Succesfully connected to ${dbURI}`);
+        expect(consoleLogSpyOn).toBeCalledWith(`Succesfully connected to MongoDB`);
         consoleLogSpyOn.mockRestore();
     });
     test('Test Fail - database connection should error', done => {
@@ -34,8 +34,8 @@ describe('Connection to database', () => {
             }
             return Promise.resolve(mongoose_1.default);
         });
-        const dbURI = 'mongodb://heroku_rn0m35kx:uo484ht45dqne8h69tqku5np5r@ds239368.mlab.com:39368/heroku_rn0m35kx';
-        DbService_1.DbConnect();
+        const dbURI = 'localhost';
+        DbService_1.DbConnect('localhost');
         expect(mongooseConnectSpyOn).toBeCalledWith(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, DbService_1.connectionLogs);
         expect(consoleLogSpyOn).toBeCalledWith('Connection error');
         consoleLogSpyOn.mockRestore();
