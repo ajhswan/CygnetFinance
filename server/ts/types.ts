@@ -1,8 +1,11 @@
+import { Document } from 'mongoose';
+
 export {
     UserRegValues,
     UserRegErrorValues,
     UserLoginValues,
-    UserLoginErrorValues
+    UserLoginErrorValues,
+    IUser
 }
 
     interface UserRegValues {
@@ -27,4 +30,10 @@ export {
     interface UserLoginErrorValues {
         email?: string,
         password?: string
+    }
+
+    interface IUser extends Document {
+        name: string,
+        email: string,
+        password: string
     }

@@ -1,5 +1,6 @@
 import mongoose = require('mongoose');
 import Schema = mongoose.Schema;
+import { IUser } from '../types';
 
 const UserSchema = new Schema({
     name: {
@@ -20,4 +21,5 @@ const UserSchema = new Schema({
     }
 });
 
-module.exports.User = mongoose.model('users', UserSchema);
+export const User = mongoose.model<IUser>('users', UserSchema)
+// module.exports.User = User;

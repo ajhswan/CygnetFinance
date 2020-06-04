@@ -33,7 +33,6 @@
     "server/ts/**/*.ts"
   ],
   "exclude": [
-    // "./react-ui/",
     "node_modules"
   ]
 }

@@ -1,8 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const RemainingController = require('./Controllers/RemainingController');
+const tslib_1 = require("tslib");
+const express_1 = tslib_1.__importDefault(require("express"));
+const RemainingController_1 = require("./Controllers/RemainingController");
+const UserController_1 = require("./Controllers/UserController");
 function routes(app) {
-    app.get('/', (request, response) => response.send('success'));
-    app.get('*', RemainingController.setRemainingRoutes);
+    const router = express_1.default.Router();
+    router.get('/', (request, response) => response.send('success'));
+    router.get('*', RemainingController_1.setRemainingRoutes);
+    router.post('/register', UserController_1.registerUser);
 }
 module.exports = routes;

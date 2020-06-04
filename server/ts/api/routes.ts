@@ -1,9 +1,15 @@
 import express from  'express';
-const RemainingController = require('./Controllers/RemainingController');
+import { setRemainingRoutes } from './Controllers/RemainingController';
+import { registerUser } from './Controllers/UserController';
+
 
 function routes(app: express.Application) {
-    app.get('/', (request, response) => response.send('success'));
-    app.get('*', RemainingController.setRemainingRoutes);
+    const router = express.Router();
+
+    router.get('/', (request, response) => response.send('success'));
+    router.get('*', setRemainingRoutes);
+    router.post('/register', registerUser)
+
 }
 
 module.exports = routes;
