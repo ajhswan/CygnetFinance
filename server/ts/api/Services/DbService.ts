@@ -1,20 +1,24 @@
 
-import Mongoose from 'mongoose';
+import mongoose, { Mongoose } from 'mongoose';
+import { MongoError} from 'mongodb';
 // const Mongoose = require('mongoose');
 
-function DbConnect() :void {
+const dbURI: string = require('../../config/keys').MONGODB_URI;
 
-    const dbURI: string = require('../../config/keys').MONGODB_URI;
+export function connectionLogs(error?: MongoError){
+    if (error) {
+        console.log(error.message);
+    } else {
+        console.log(`Succesfully connected to ${dbURI}`)
+    }
+    return {
+        connectionLog: connectionLogs
+    };
+}
 
-    Mongoose
-        .connect(dbURI, { useNewUrlParser:true, useUnifiedTopology: true })
-        .then(() => {
-            return console.log(`Succesfully connected to ${dbURI}`);
-        })
-        .catch((Error: any) => {
-            console.log('Error connecting to databse:', Error);
-            return process.exit(1);
-        });
+export function DbConnect(): Promise<Mongoose> {
+
+    return mongoose.connect(dbURI, { useNewUrlParser:true, useUnifiedTopology: true },connectionLogs)
 }
 
 module.exports.DbConnect = DbConnect;

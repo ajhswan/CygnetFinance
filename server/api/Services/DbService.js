@@ -2,16 +2,21 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const mongoose_1 = tslib_1.__importDefault(require("mongoose"));
-function DbConnect() {
-    const dbURI = require('../../config/keys').MONGODB_URI;
-    mongoose_1.default
-        .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-        .then(() => {
-        return console.log(`Succesfully connected to ${dbURI}`);
-    })
-        .catch((Error) => {
-        console.log('Error connecting to databse:', Error);
-        return process.exit(1);
-    });
+const dbURI = require('../../config/keys').MONGODB_URI;
+function connectionLogs(error) {
+    if (error) {
+        console.log(error.message);
+    }
+    else {
+        console.log(`Succesfully connected to ${dbURI}`);
+    }
+    return {
+        connectionLog: connectionLogs
+    };
 }
+exports.connectionLogs = connectionLogs;
+function DbConnect() {
+    return mongoose_1.default.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, connectionLogs);
+}
+exports.DbConnect = DbConnect;
 module.exports.DbConnect = DbConnect;
