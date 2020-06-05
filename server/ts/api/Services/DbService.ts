@@ -10,6 +10,7 @@ export function connectionLogs(error?: MongoError){
         console.log(error.message);
     } else {
         console.log(`Succesfully connected to MongoDB`)
+        mongoose.connection.on('error', console.error.bind(console, 'MongoDb connection error:'))
     }
     return {
         connectionLog: connectionLogs
@@ -19,7 +20,8 @@ export function connectionLogs(error?: MongoError){
 export function DbConnect(dbURI: string): Promise<Mongoose> {
     const options = {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        poolSize: 5
     }
     return mongoose.connect(dbURI, options, connectionLogs)
 }

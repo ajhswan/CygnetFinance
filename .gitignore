@@ -10,6 +10,7 @@ react-ui/src/react-app-env.d.ts
 .vscode/
 .idea/
 server/config
+server/ts/config/
 coverage/
 
 # Docker

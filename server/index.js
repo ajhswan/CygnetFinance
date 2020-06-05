@@ -21,7 +21,6 @@ else {
     const DbService = require('./api/Services/DbService');
     app.use(bodyParser.json());
     app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
-    DbService.DbConnect();
     routes(app);
     app.listen(PORT, function () {
         console.error(`Node ${isDev ? 'dev server' : 'cluster worker ' + process.pid}: listening on port ${PORT}`);

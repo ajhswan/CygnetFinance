@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const mongoose_1 = tslib_1.__importDefault(require("mongoose"));
+const dbURI = require('../../config/keys').MONGODB_URI;
 function connectionLogs(error) {
     if (error) {
         console.log(error.message);
@@ -15,7 +16,12 @@ function connectionLogs(error) {
 }
 exports.connectionLogs = connectionLogs;
 function DbConnect(dbURI) {
-    return mongoose_1.default.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, connectionLogs);
+    const options = {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        poolSize: 5
+    };
+    return mongoose_1.default.connect(dbURI, options, connectionLogs);
 }
 exports.DbConnect = DbConnect;
 module.exports.DbConnect = DbConnect;
