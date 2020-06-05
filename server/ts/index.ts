@@ -27,7 +27,7 @@ if (!isDev && cluster.isMaster) {
 
     app.use(bodyParser.json());
     app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
-    DbService.DbConnect();
+    // DbService.DbConnect();
     routes(app);
 
     app.listen(PORT, function () {

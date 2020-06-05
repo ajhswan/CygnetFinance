@@ -3,7 +3,7 @@ import mongoose, { Mongoose } from 'mongoose';
 import { MongoError} from 'mongodb';
 // const Mongoose = require('mongoose');
 
-// const dbURI: string = require('../../config/keys').MONGODB_URI;
+const dbURI: string = require('../../config/keys').MONGODB_URI;
 
 export function connectionLogs(error?: MongoError){
     if (error) {
@@ -17,8 +17,11 @@ export function connectionLogs(error?: MongoError){
 }
 
 export function DbConnect(dbURI: string): Promise<Mongoose> {
-
-    return mongoose.connect(dbURI, { useNewUrlParser:true, useUnifiedTopology: true },connectionLogs)
+    const options = {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }
+    return mongoose.connect(dbURI, options, connectionLogs)
 }
 
 module.exports.DbConnect = DbConnect;
