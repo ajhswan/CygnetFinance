@@ -9,5 +9,6 @@ function routes(app) {
     router.get('/', (request, response) => response.send('success'));
     router.get('*', RemainingController_1.setRemainingRoutes);
     router.post('/register', UserController_1.registerUser);
+    router.post('/login', UserController_1.loginUser);
 }
 module.exports = routes;

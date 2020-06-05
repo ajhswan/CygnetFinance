@@ -1,6 +1,6 @@
 import express from  'express';
 import { setRemainingRoutes } from './Controllers/RemainingController';
-import { registerUser } from './Controllers/UserController';
+import { registerUser, loginUser } from './Controllers/UserController';
 
 
 function routes(app: express.Application) {
@@ -9,6 +9,7 @@ function routes(app: express.Application) {
     router.get('/', (request, response) => response.send('success'));
     router.get('*', setRemainingRoutes);
     router.post('/register', registerUser)
+    router.post('/login', loginUser)
 
 }
 

@@ -3,13 +3,12 @@ import mongoose, { Mongoose } from 'mongoose';
 import { MongoError} from 'mongodb';
 // const Mongoose = require('mongoose');
 
-const dbURI: string = require('../../config/keys').MONGODB_URI;
 
 export function connectionLogs(error?: MongoError){
     if (error) {
         console.log(error.message);
     } else {
-        console.log(`Succesfully connected to MongoDB`)
+        console.log(`Succesfully connected to MongoDB`, mongoose.connection.name)
         mongoose.connection.on('error', console.error.bind(console, 'MongoDb connection error:'))
     }
     return {

@@ -4,7 +4,7 @@ const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
 const isDev = process.env.NODE_ENV !== 'production';
 const PORT = process.env.PORT || 5000;
-const dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+const dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/cygnetFinance';
 // Multi-process to utilize all CPU cores.
 if (!isDev && cluster.isMaster) {
     console.error(`Node cluster master ${process.pid} is running`);
@@ -23,10 +23,12 @@ if (!isDev && cluster.isMaster) {
     const routes = require('./api/routes');
     const bodyParser = require('body-parser');
     const DbService = require('./api/Services/DbService');
-
+    const passport = require('passport');
 
     app.use(bodyParser.json());
     app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
+    app.use(passport.initialize());
+    require('./config/passport')(passport);
     DbService.DbConnect(dbURI);
     routes(app);
 

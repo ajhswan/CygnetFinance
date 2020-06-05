@@ -15,3 +15,15 @@ function registerUser(request, response) {
     ;
 }
 exports.registerUser = registerUser;
+function loginUser(request, response) {
+    const { errors, isValid } = ValidationService_1.validateLoginInput(request.body);
+    if (!isValid) {
+        return response
+            .status(400)
+            .json(errors);
+    }
+    else {
+        return UserService_1.authenticateUser(request, response);
+    }
+}
+exports.loginUser = loginUser;
