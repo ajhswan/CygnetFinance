@@ -9,6 +9,7 @@ function connectionLogs(error) {
     }
     else {
         console.log(`Succesfully connected to MongoDB`);
+        mongoose_1.default.connection.on('error', console.error.bind(console, 'MongoDb connection error:'));
     }
     return {
         connectionLog: connectionLogs

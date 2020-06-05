@@ -5,6 +5,7 @@ const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
 const isDev = process.env.NODE_ENV !== 'production';
 const PORT = process.env.PORT || 5000;
+const dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017';
 if (!isDev && cluster.isMaster) {
     console.error(`Node cluster master ${process.pid} is running`);
     for (let i = 0; i < numCPUs; i++) {
@@ -21,6 +22,7 @@ else {
     const DbService = require('./api/Services/DbService');
     app.use(bodyParser.json());
     app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
+    DbService.DbConnect(dbURI);
     routes(app);
     app.listen(PORT, function () {
         console.error(`Node ${isDev ? 'dev server' : 'cluster worker ' + process.pid}: listening on port ${PORT}`);
