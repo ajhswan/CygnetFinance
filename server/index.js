@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const express = require('express');
 const path = require('path');
 const cluster = require('cluster');
@@ -21,6 +22,7 @@ else {
     const bodyParser = require('body-parser');
     const DbService = require('./api/Services/DbService');
     const passport = require('passport');
+    app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
     app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
     app.use(passport.initialize());
