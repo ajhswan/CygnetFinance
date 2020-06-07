@@ -4,7 +4,7 @@ const tslib_1 = require("tslib");
 const User_1 = require("../../models/User");
 const bcryptjs_1 = tslib_1.__importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = tslib_1.__importDefault(require("jsonwebtoken"));
-const keys = require('../../config/keys');
+const keys_1 = require("../../config/keys");
 function createNewUser(request, response) {
     User_1.User.findOne({ email: request.body.email })
         .then(user => {
@@ -63,7 +63,7 @@ function authenticateUser(request, response) {
                     const options = {
                         expiresIn: 31556926
                     };
-                    const secretOrKey = keys.secretOrKey;
+                    const secretOrKey = keys_1.keys.secretOrKey;
                     return jsonwebtoken_1.default.sign(payload, secretOrKey, options, (error, token) => {
                         response.json({
                             success: true,

@@ -1,7 +1,7 @@
 import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt'
 import mongoose from 'mongoose';
-
-const keys = require('./keys');
+import { keys } from './keys';
+// const keys = require('./keys');
 
 
 const User = mongoose.model('users');
