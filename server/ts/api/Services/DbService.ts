@@ -8,7 +8,7 @@ export function connectionLogs(error?: MongoError){
     if (error) {
         console.log(error.message);
     } else {
-        console.log(`Succesfully connected to MongoDB`, mongoose.connection)
+        console.log(`Succesfully connected to MongoDB`, mongoose.connection.host)
         mongoose.connection.on('error', console.error.bind(console, 'MongoDb connection error:'))
     }
     return {
