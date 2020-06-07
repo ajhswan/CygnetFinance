@@ -1,11 +1,12 @@
-import express = require('express');
+import { parentPort } from "worker_threads";
+
+const express = require('express');
 const path = require('path');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
-
 const isDev = process.env.NODE_ENV !== 'production';
 const PORT = process.env.PORT || 5000;
-
+const dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/cygnetFinance';
 // Multi-process to utilize all CPU cores.
 if (!isDev && cluster.isMaster) {
     console.error(`Node cluster master ${process.pid} is running`);
@@ -21,20 +22,18 @@ if (!isDev && cluster.isMaster) {
 
 } else {
     const app = express();
+    const routes = require('./api/routes');
+    const bodyParser = require('body-parser');
+    const DbService = require('./api/Services/DbService');
+    const passport = require('passport');
 
-    // Priority serve any static files.
-    app.use(express.static(path.resolve(__dirname, '../react-ui/src')));
-
-    // Answer API requests.
-    app.get('/api', function (req: express.Request, res: express.Response) {
-        res.set('Content-Type', 'application/json');
-        res.send('{"message":"Hello from the custom server!"}');
-    });
-
-    // All remaining requests return the React app, so it can handle routing.
-    app.get('*', function(request: express.Request, response: express.Response) : void {
-        response.sendFile(path.resolve(__dirname, '../react-ui/src', 'index.html'));
-    });
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.json());
+    app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
+    app.use(passport.initialize());
+    require('./config/passport')(passport);
+    DbService.DbConnect(dbURI);
+    routes(app);
 
     app.listen(PORT, function () {
         console.error(`Node ${isDev ? 'dev server' : 'cluster worker '+process.pid}: listening on port ${PORT}`);

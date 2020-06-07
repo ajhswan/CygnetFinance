@@ -1,20 +1,29 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "CommonJS",
     "strict": true,
     "baseUrl": "./",
+    "paths": {
+      "@server": ["server/ts/*"]
+    },
     "outDir": "./server",
     "removeComments": true,
     "experimentalDecorators": true,
     "target": "es6",
     "emitDecoratorMetadata": true,
     "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "noImplicitReturns": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "importHelpers": true,
     "types": [
-      "node"
+      "node",
+      "mongoose",
+      "jest",
+      "validator",
+      "is-empty"
     ],
     "typeRoots": [
       "node_modules/@types"
@@ -24,7 +33,6 @@
     "server/ts/**/*.ts"
   ],
   "exclude": [
-    // "./react-ui/",
     "node_modules"
   ]
 }
