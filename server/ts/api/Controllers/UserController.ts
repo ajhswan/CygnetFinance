@@ -4,7 +4,6 @@ import { createNewUser, authenticateUser } from '../Services/UserService';
 
 export function registerUser(request: Request, response: Response) {
     const { errors, isValid } = validateRegisterInput(request.body);
-
     if (!isValid) {
         return response
         .status(400)

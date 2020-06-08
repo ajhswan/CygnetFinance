@@ -9,7 +9,6 @@ function routes(app: express.Application) {
     app.get('*', setRemainingRoutes);
     app.post('/user/register', registerUser)
     app.post('/user/login', loginUser)
-
 }
 
 module.exports = routes;
