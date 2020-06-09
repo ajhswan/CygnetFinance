@@ -7,7 +7,7 @@ describe('User Registration Validation', () => {
             name: 'name',
             email: 'email@domain.com',
             password: 'password',
-            password2: 'password'
+            password2: 'password'   
         }
         expect(validateRegisterInput(testDataSuccess))
         .toMatchObject({errors: {}, isValid: true})

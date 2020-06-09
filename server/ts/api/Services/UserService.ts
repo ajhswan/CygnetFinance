@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken';
 import  { keys }  from '../../config/keys';
 
 export function createNewUser (request: Request, response: Response) {
+    try {
     User.findOne({ email: request.body.email})
         .then( user => { 
             if (user) {
@@ -30,14 +31,22 @@ export function createNewUser (request: Request, response: Response) {
                         newUser
                         .save()
                         .then(user =>  response.json(user))
-                        .catch(error => console.log(error));
+                        .catch(error => response
+                                        .status(500)
+                                        .json(error));
                     })
                 });
                 return response
                 .status(200)
-                .json('New user added succesfully');
+                .json('New user added successfully');
             } 
         });
+    } catch (error) {
+        response
+        .status(500)
+        .json(error);
+        console.log(error)
+    }  
 }
 
 export function authenticateUser (request: Request, response: Response) {
