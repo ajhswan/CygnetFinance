@@ -15,11 +15,7 @@ const dbName = 'cygnetFinanceTestRoutes'
 
 
 beforeAll(async () => {
-    await mongoose.createConnection(dbURI, options); 
-})
-
-beforeEach(async () => {
-    await mongoose.connection.collections['users'].drop(error => console.log('drop'));
+    await mongoose.connect(dbURI, options); 
 })
 
 describe('POST /user/register', () => {
@@ -33,7 +29,7 @@ describe('POST /user/register', () => {
                 password2: 'password'
             })
             expect(response.status).toBe(200);
-            expect(response.body).toBe('New user added successfully')
+            expect(response.body).toBe('New user added successfully');
             done();
     })
 
@@ -123,8 +119,8 @@ describe('POST /user/register', () => {
                 password: 'password',
                 password2: 'password'
             })
-            await expect(response.status).toBe(200);
-            await expect(response.body).toBe('New user added successfully')
+            expect(response.status).toBe(200);
+            expect(response.body).toBe('New user added successfully')
             done();
     })
 }) 

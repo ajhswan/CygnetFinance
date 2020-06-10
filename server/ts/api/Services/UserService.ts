@@ -21,22 +21,11 @@ export function createNewUser (request: Request, response: Response) {
                     email: sanatizeData(request.body.email),
                     password: sanatizeData(request.body.password)
                 });
-                bcrypt.genSalt(10, (error, salt) => {
-                    bcrypt.hash(newUser.password, salt, (error, hash) => {
-                        if (error){ 
-                            throw response
-                            .status(500)
-                            .json(error);
-                        };
-                        newUser.password = hash;
-                        newUser
-                        .save()
-                        .then(user =>  response.json(user))
-                        .catch(error => response
-                                        .status(500)
-                                        .json(error));
-                    })
-                });
+                newUser.save((error) => {
+                    if (error) {
+                        throw error;
+                    }
+                })
                 return response
                 .status(200)
                 .json('New user added successfully');
