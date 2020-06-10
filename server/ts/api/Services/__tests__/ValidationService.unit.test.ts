@@ -54,7 +54,7 @@ describe('User Registration Validation', () => {
             password2: 'password'
         }
         expect(validateRegisterInput(testDataFailPassword))
-        .toMatchObject({ errors: {password: "Password must be at least 6 characters and no more the 30 characters"}, isValid: false })
+        .toMatchObject({ errors: {password: "Password must be at least 6 characters and no more than 30 characters"}, isValid: false })
     });
 
     test('Fail test - Confirm password field required', () => {
@@ -77,7 +77,7 @@ describe('User Registration Validation', () => {
         }
         expect(validateRegisterInput(testDataFailPasswordLengthMin))
         .toMatchObject({ 
-        errors: {password: "Password must be at least 6 characters and no more the 30 characters"}, isValid: false })
+        errors: {password: "Password must be at least 6 characters and no more than 30 characters"}, isValid: false })
     });
 
     test('Fail test - Password length max 30', () => {
@@ -89,7 +89,7 @@ describe('User Registration Validation', () => {
 }     
         expect(validateRegisterInput(testDataFailPasswordLengthMax))
         .toMatchObject({ 
-        errors: {password: "Password must be at least 6 characters and no more the 30 characters"}, isValid: false })
+        errors: {password: "Password must be at least 6 characters and no more than 30 characters"}, isValid: false })
     });
 
     test('Fail test - Password match', () => {

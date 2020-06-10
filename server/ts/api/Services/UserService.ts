@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { User } from '../../models/User';
 import bcrypt from 'bcryptjs';
+import { sanatizeData } from '../Services/ValidationService'
 import { ExtractJwt } from 'passport-jwt';
 import jwt from 'jsonwebtoken';
 // const keys = require('../../config/keys');
@@ -16,9 +17,9 @@ export function createNewUser (request: Request, response: Response) {
                 .json({ email: "Email already exists"});
             } else {
                 const newUser = new User ({
-                    name: request.body.name,
-                    email: request.body.email,
-                    password: request.body.password
+                    name: sanatizeData(request.body.name),
+                    email: sanatizeData(request.body.email),
+                    password: sanatizeData(request.body.password)
                 });
                 bcrypt.genSalt(10, (error, salt) => {
                     bcrypt.hash(newUser.password, salt, (error, hash) => {
