@@ -28,7 +28,7 @@ function validateRegisterInput(data) {
     data.email = !is_empty_1.default(data.email) ? data.email : "";
     data.password = !is_empty_1.default(data.password) ? data.password : "";
     data.password2 = !is_empty_1.default(data.password2) ? data.password2 : "";
-    if (validator_1.default.isEmpty(data.name)) {
+    if (validator_1.default.isEmpty(sanatizeData(data.name))) {
         errors.name = "Name field is required";
     }
     if (validator_1.default.isEmpty(data.email)) {
@@ -44,7 +44,7 @@ function validateRegisterInput(data) {
         errors.password2 = "Confirm password field is required";
     }
     if (!validator_1.default.isLength(data.password, { min: 6, max: 30 })) {
-        errors.password = "Password must be at least 6 characters and no more the 30 characters";
+        errors.password = "Password must be at least 6 characters and no more than 30 characters";
     }
     if (!validator_1.default.equals(data.password, data.password2)) {
         errors.password2 = "Passwords must match";
@@ -55,5 +55,11 @@ function validateRegisterInput(data) {
     };
 }
 exports.validateRegisterInput = validateRegisterInput;
+function sanatizeData(data) {
+    data = data.trim();
+    data = validator_1.default.escape(data);
+    return data;
+}
+exports.sanatizeData = sanatizeData;
 module.exports.validateLoginInput = validateLoginInput;
 module.exports.validateRegisterInput = validateRegisterInput;
