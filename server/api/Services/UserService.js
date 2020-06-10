@@ -64,7 +64,8 @@ function authenticateUser(request, response) {
                     };
                     const secretOrKey = keys_1.keys.secretOrKey;
                     return jsonwebtoken_1.default.sign(payload, secretOrKey, options, (error, token) => {
-                        response.json({
+                        response.status(200)
+                            .json({
                             success: true,
                             token: "Bearer" + token
                         });
@@ -76,9 +77,7 @@ function authenticateUser(request, response) {
                         .json({ passwordincorrect: "Password incorrect" });
                 }
             });
-            return response
-                .status(200)
-                .json('User succesfully authenticated');
+            return;
         }
     });
 }

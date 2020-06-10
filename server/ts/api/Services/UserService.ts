@@ -50,6 +50,11 @@ export function authenticateUser (request: Request, response: Response) {
                 .status(404)
                 .json({ emailnotfound: "Email not found"});
             } else {
+                
+
+
+
+
                 bcrypt
                 .compare(password, user.password)
                 .then(isMatch => {
@@ -64,7 +69,8 @@ export function authenticateUser (request: Request, response: Response) {
                         const secretOrKey:jwt.Secret = keys.secretOrKey;
 
                         return jwt.sign(payload, secretOrKey , options, (error, token) => {
-                                response.json({
+                                response.status(200)
+                                .json({
                                 success: true,
                                 token: "Bearer" + token
                             })
@@ -75,9 +81,7 @@ export function authenticateUser (request: Request, response: Response) {
                         .json({ passwordincorrect: "Password incorrect"});
                     }
                 });
-                return response
-                .status(200)
-                .json('User succesfully authenticated');
+                return;
             }
         }); 
 }
