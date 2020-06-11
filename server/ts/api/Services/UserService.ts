@@ -41,7 +41,7 @@ export function createNewUser (request: Request, response: Response) {
 
 export function authenticateUser (request: Request, response: Response) {
     const email = request.body.email;
-    const password = request.body.email;
+    const password = request.body.password;
 
     User.findOne({ email })
         .then(user => {
@@ -50,11 +50,6 @@ export function authenticateUser (request: Request, response: Response) {
                 .status(404)
                 .json({ emailnotfound: "Email not found"});
             } else {
-                
-
-
-
-
                 bcrypt
                 .compare(password, user.password)
                 .then(isMatch => {

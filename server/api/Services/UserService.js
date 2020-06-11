@@ -28,7 +28,7 @@ function createNewUser(request, response) {
                 });
                 return response
                     .status(200)
-                    .json('New user added successfully');
+                    .json(user);
             }
         });
     }
@@ -42,7 +42,7 @@ function createNewUser(request, response) {
 exports.createNewUser = createNewUser;
 function authenticateUser(request, response) {
     const email = request.body.email;
-    const password = request.body.email;
+    const password = request.body.password;
     User_1.User.findOne({ email })
         .then(user => {
         if (!user) {

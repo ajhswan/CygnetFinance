@@ -71,5 +71,6 @@ export function sanatizeData(data: string) {
 
 }
 
+
 module.exports.validateLoginInput = validateLoginInput
 module.exports.validateRegisterInput = validateRegisterInput;

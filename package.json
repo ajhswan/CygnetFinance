@@ -6,8 +6,11 @@
     "node": "10.x"
   },
   "scripts": {
+    "client-install": "npm install --prefix react-ui",
     "server": "nodemon server",
     "start": "node server",
+    "client": "npm start --prefix react-ui",
+    "dev": "concurrently \" npm run server\" \"npm run client\"",
     "test": "jest",
     "build": "cd react-ui/ && npm install && npm run build"
   },
