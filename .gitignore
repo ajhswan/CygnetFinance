@@ -9,7 +9,6 @@ react-ui/src/react-app-env.d.ts
 .DS_Store
 .vscode/
 .idea/
-server/config
 server/ts/config/
 coverage/
 
