@@ -8,4 +8,5 @@ function routes(app) {
     app.post('/user/register', UserController_1.registerUser);
     app.post('/user/login', UserController_1.loginUser);
 }
+exports.routes = routes;
 module.exports = routes;

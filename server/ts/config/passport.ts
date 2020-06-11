@@ -1,4 +1,6 @@
-import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt'
+// import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt'
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
 import mongoose from 'mongoose';
 import { keys } from './keys';
 // const keys = require('./keys');
@@ -14,7 +16,7 @@ const options = {
 
 module.exports = (passport: any) => {
     passport.use(
-        new JwtStrategy(options, (jwt_payload, done) => {
+        new JwtStrategy(options, (jwt_payload: any, done: any) => {
             User.findById(jwt_payload.id)
             .then(user => {
                 if (user) {

@@ -1,6 +1,8 @@
-import mongoose = require('mongoose');
+import mongoose from 'mongoose';
 import Schema = mongoose.Schema;
+import bcrypt from 'bcryptjs';
 import { IUser } from '../types';
+const SALT_WORK_FACTOR = 10
 
 const UserSchema = new Schema({
     name: {
@@ -19,6 +21,21 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now
     }
+});
+
+UserSchema.pre<IUser>('save', function(next) {
+    const user = this;
+
+    if(!user.isModified('password')) return next();
+
+    bcrypt.genSalt(SALT_WORK_FACTOR, function (error, salt) {
+        if (error) return next(error);
+        bcrypt.hash(user.password, salt, function (error, hash) {
+            if (error) return next(error);
+            user.password = hash;
+            next();
+        });
+    });
 });
 
 export const User = mongoose.model<IUser>('users', UserSchema)

@@ -20,7 +20,7 @@ describe('Connection to database', () => {
         DbConnect('localhost');
         expect(mongooseConnectSpyOn).toBeCalledWith(
             dbURI,
-             { useNewUrlParser:true, useUnifiedTopology: true },
+             { useNewUrlParser:true, useUnifiedTopology: true, poolSize: 5 },
              connectionLogs
               
     );
@@ -43,7 +43,7 @@ describe('Connection to database', () => {
         DbConnect('localhost');
         expect(mongooseConnectSpyOn).toBeCalledWith(
             dbURI,
-             { useNewUrlParser:true, useUnifiedTopology: true },
+             { useNewUrlParser:true, useUnifiedTopology: true, poolSize: 5 },
              connectionLogs        
         );
         expect(consoleLogSpyOn).toBeCalledWith('Connection error');

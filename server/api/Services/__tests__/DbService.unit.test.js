@@ -19,7 +19,7 @@ describe('Connection to database', () => {
         });
         const dbURI = 'localhost';
         DbService_1.DbConnect('localhost');
-        expect(mongooseConnectSpyOn).toBeCalledWith(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, DbService_1.connectionLogs);
+        expect(mongooseConnectSpyOn).toBeCalledWith(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, poolSize: 5 }, DbService_1.connectionLogs);
         expect(consoleLogSpyOn).toBeCalledWith(`Succesfully connected to MongoDB`);
         consoleLogSpyOn.mockRestore();
     });
@@ -36,7 +36,7 @@ describe('Connection to database', () => {
         });
         const dbURI = 'localhost';
         DbService_1.DbConnect('localhost');
-        expect(mongooseConnectSpyOn).toBeCalledWith(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, DbService_1.connectionLogs);
+        expect(mongooseConnectSpyOn).toBeCalledWith(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, poolSize: 5 }, DbService_1.connectionLogs);
         expect(consoleLogSpyOn).toBeCalledWith('Connection error');
         consoleLogSpyOn.mockRestore();
     });

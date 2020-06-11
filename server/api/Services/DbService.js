@@ -7,8 +7,7 @@ function connectionLogs(error) {
         console.log(error.message);
     }
     else {
-        console.log(`Succesfully connected to MongoDB`, mongoose_1.default.connection.host);
-        mongoose_1.default.connection.on('error', console.error.bind(console, 'MongoDb connection error:'));
+        console.log(`Succesfully connected to MongoDB`);
     }
     return {
         connectionLog: connectionLogs

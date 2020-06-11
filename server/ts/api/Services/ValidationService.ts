@@ -4,7 +4,6 @@ import { UserRegValues, UserLoginValues, UserRegErrorValues, UserLoginErrorValue
 
 export function validateLoginInput(data: UserLoginValues ) {
     let errors: UserLoginErrorValues = {};
-
     data.email = !isEmpty(data.email) ? data.email : "";
     data.password = !isEmpty(data.password) ? data.password : "";
     
@@ -33,7 +32,7 @@ export function validateRegisterInput(data: UserRegValues): { errors: UserRegErr
     data.password = !isEmpty(data.password) ? data.password : "";
     data.password2 = !isEmpty(data.password2) ? data.password2 : "";
 
-    if (Validator.isEmpty(data.name)) {
+    if (Validator.isEmpty(sanatizeData(data.name))) {
         errors.name = "Name field is required";
     }
 
@@ -52,7 +51,7 @@ export function validateRegisterInput(data: UserRegValues): { errors: UserRegErr
     }
 
     if (!Validator.isLength(data.password, { min: 6, max: 30})) {
-        errors.password = "Password must be at least 6 characters and no more the 30 characters";
+        errors.password = "Password must be at least 6 characters and no more than 30 characters";
     }
 
     if (!Validator.equals(data.password, data.password2)) {
@@ -64,6 +63,14 @@ export function validateRegisterInput(data: UserRegValues): { errors: UserRegErr
         isValid: isEmpty(errors)
     };
 }
+
+export function sanatizeData(data: string) {
+    data = data.trim();
+    data = Validator.escape(data);
+    return data;
+
+}
+
 
 module.exports.validateLoginInput = validateLoginInput
 module.exports.validateRegisterInput = validateRegisterInput;

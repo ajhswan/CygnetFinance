@@ -1,7 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+const tslib_1 = require("tslib");
+const mongoose_1 = tslib_1.__importDefault(require("mongoose"));
+var Schema = mongoose_1.default.Schema;
+const bcryptjs_1 = tslib_1.__importDefault(require("bcryptjs"));
+const SALT_WORK_FACTOR = 10;
 const UserSchema = new Schema({
     name: {
         type: String,
@@ -20,4 +23,19 @@ const UserSchema = new Schema({
         default: Date.now
     }
 });
-exports.User = mongoose.model('users', UserSchema);
+UserSchema.pre('save', function (next) {
+    const user = this;
+    if (!user.isModified('password'))
+        return next();
+    bcryptjs_1.default.genSalt(SALT_WORK_FACTOR, function (error, salt) {
+        if (error)
+            return next(error);
+        bcryptjs_1.default.hash(user.password, salt, function (error, hash) {
+            if (error)
+                return next(error);
+            user.password = hash;
+            next();
+        });
+    });
+});
+exports.User = mongoose_1.default.model('users', UserSchema);
