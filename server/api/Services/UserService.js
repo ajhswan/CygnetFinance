@@ -28,7 +28,7 @@ function createNewUser(request, response) {
                 });
                 return response
                     .status(200)
-                    .json(user);
+                    .json('New user added successfully');
             }
         });
     }

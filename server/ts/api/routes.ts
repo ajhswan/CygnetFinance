@@ -3,6 +3,7 @@ import { setRemainingRoutes } from './Controllers/RemainingController';
 import { registerUser, loginUser } from './Controllers/UserController';
 
 
+
 export function routes(app: express.Application) {
     
     app.get('/', (request, response) => response.send('success'));
