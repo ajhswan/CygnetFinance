@@ -107,11 +107,11 @@ class Login extends Component<ILoginProps, ILoginState> {
                 <form noValidate onSubmit={this.handleSubmit}>
 
                     <div className='form-div'>
-                        <label className='form-label' htmlFor='email'>Email</label>
                         <span className='red-text'>
                             {errors.email}
                             {errors.emailnotfound}
                         </span>
+                        <label className='form-label' htmlFor='email'>Email</label>
                         <input className= { classnames('form-input browser-default', {invalid: errors.email || errors.emailnotfound}) }
                         onChange={this.handleChange}
                         value={this.state.email}
@@ -121,17 +121,17 @@ class Login extends Component<ILoginProps, ILoginState> {
                         />
                     </div>
                     <div className='form-div'>
-                        <label className='form-label' htmlFor='password'>Password</label>
-                        <span className='red-text'>
+                    <   span className='red-text'>
                             {errors.password}
                             {errors.passwordincorrect}
                         </span>
+                        <label className='form-label' htmlFor='password'>Password</label>
                         <input className={classnames('form-input browser-default', {invalid: errors.password || errors.passwordincorrect}) }
                         onChange={this.handleChange}
                         value={this.state.password}
                         data-error={errors.password}
                         id='password'
-                        type='passwoform'
+                        type='password'
                         />
                     </div>
                     <div>

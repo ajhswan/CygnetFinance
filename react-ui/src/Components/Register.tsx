@@ -114,8 +114,8 @@ class Register extends Component<IRegisterProps & RouteComponentProps, IRegister
                     </ReturnHome>
                     <form noValidate onSubmit={this.handleSubmit}>
                         <div className='form-div'>
-                            <label className='form-label' htmlFor='name'>Name</label>
                             <span className='red-text'>{errors.name}</span>
+                            <label className='form-label' htmlFor='name'>Name</label>
                             <input className={ classnames('form-input browser-default', {invalid: errors.name}) }
                             onChange={this.handleChange}
                             value={this.state.name}
@@ -125,8 +125,8 @@ class Register extends Component<IRegisterProps & RouteComponentProps, IRegister
                             />
                         </div>
                         <div className='form-div'>
-                            <label className='form-label' htmlFor='email'>Email</label>
                             <span className='red-text'>{errors.email}</span>
+                            <label className='form-label' htmlFor='email'>Email</label>
                             <input className={ classnames('form-input browser-default', {invalid: errors.email}) }
                             onChange={this.handleChange}
                             value={this.state.email}
@@ -136,19 +136,19 @@ class Register extends Component<IRegisterProps & RouteComponentProps, IRegister
                             />
                         </div>
                         <div className='form-div'>
-                            <label className='form-label' htmlFor='password'>Password</label>
                             <span className='red-text'>{errors.password}</span>
+                            <label className='form-label' htmlFor='password'>Password</label>
                             <input className={ classnames('form-input browser-default',{invalid: errors.password}) }
                             onChange={this.handleChange}
                             value={this.state.password}
                             data-error={errors.password}
                             id='password'
-                            type='passwoform'
+                            type='password'
                             />
                         </div>
                         <div className='form-div'>
-                            <label className='form-label' htmlFor='password2'>Confirm Password</label>
                             <span className='red-text'>{errors.password2}</span>
+                            <label className='form-label' htmlFor='password2'>Confirm Password</label>
                             <input className= { classnames('form-input browser-default', {invalid: errors.password2}) }
                             onChange={this.handleChange}
                             value={this.state.password2}
