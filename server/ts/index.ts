@@ -1,6 +1,6 @@
 import { parentPort } from "worker_threads";
 
-const express = require('express');
+import express from 'express';
 const path = require('path');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
@@ -30,6 +30,13 @@ if (!isDev && cluster.isMaster) {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
     app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
+    app.get('/api', function (request: express.Request, response: express.Response) {
+        response.set('Content-Type', 'application/json');
+        response.send('{"message": "Hello from the server!"}');
+    })
+    app.get('*', function (request: express.Request, response: express.Response) {
+        response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
+    })
     app.use(passport.initialize());
     require('./config/passport')(passport);
     DbService.DbConnect(dbURI);

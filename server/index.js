@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const express = require('express');
+const tslib_1 = require("tslib");
+const express_1 = tslib_1.__importDefault(require("express"));
 const path = require('path');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
@@ -17,14 +18,21 @@ if (!isDev && cluster.isMaster) {
     });
 }
 else {
-    const app = express();
+    const app = express_1.default();
     const routes = require('./api/routes');
     const bodyParser = require('body-parser');
     const DbService = require('./api/Services/DbService');
     const passport = require('passport');
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
-    app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
+    app.use(express_1.default.static(path.resolve(__dirname, '../react-ui/build')));
+    app.get('/api', function (request, response) {
+        response.set('Content-Type', 'application/json');
+        response.send('{"message": "Hello from the server!"}');
+    });
+    app.get('*', function (request, response) {
+        response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
+    });
     app.use(passport.initialize());
     require('./config/passport')(passport);
     DbService.DbConnect(dbURI);

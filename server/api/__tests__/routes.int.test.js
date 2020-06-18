@@ -15,9 +15,9 @@ const dbURI = `mongodb://localhost:27017/${dbName}`;
 beforeAll(() => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     yield mongoose_1.default.connect(dbURI, options);
 }));
-describe('POST /user/register', () => {
+describe('POST /users/register', () => {
     test('Success Test - Register new user', (done) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-        const response = yield request.post('/user/register')
+        const response = yield request.post('/users/register')
             .send({
             name: 'barry',
             email: 'barry@domain.com',
@@ -29,7 +29,7 @@ describe('POST /user/register', () => {
         done();
     }));
     test('Fail Test - Register new user: missing name', (done) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-        const response = yield request.post('/user/register')
+        const response = yield request.post('/users/register')
             .send({
             name: '',
             email: 'barry@domain.com',
@@ -41,7 +41,7 @@ describe('POST /user/register', () => {
         done();
     }));
     test('Fail Test - Register new user: missing email', (done) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-        const response = yield request.post('/user/register')
+        const response = yield request.post('/users/register')
             .send({
             name: 'barry',
             email: '',
@@ -53,7 +53,7 @@ describe('POST /user/register', () => {
         done();
     }));
     test('Fail Test - Register new user: invalid email', (done) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-        const response = yield request.post('/user/register')
+        const response = yield request.post('/users/register')
             .send({
             name: 'barry',
             email: 'barry.com',
@@ -65,7 +65,7 @@ describe('POST /user/register', () => {
         done();
     }));
     test('Fail Test - Register new user: missing password', (done) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-        const response = yield request.post('/user/register')
+        const response = yield request.post('/users/register')
             .send({
             name: 'barry',
             email: 'barry@domain.com',
@@ -77,7 +77,7 @@ describe('POST /user/register', () => {
         done();
     }));
     test('Fail Test - Register new user: missing password2', (done) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-        const response = yield request.post('/user/register')
+        const response = yield request.post('/users/register')
             .send({
             name: 'barry',
             email: 'barry@domain.com',
@@ -89,7 +89,7 @@ describe('POST /user/register', () => {
         done();
     }));
     test('Fail Test - Register new user: name space', (done) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-        const response = yield request.post('/user/register')
+        const response = yield request.post('/users/register')
             .send({
             name: ' ',
             email: 'barry@domain.com',
@@ -101,7 +101,7 @@ describe('POST /user/register', () => {
         done();
     }));
     test('Fail Test - Register new user: name specialChar', (done) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-        const response = yield request.post('/user/register')
+        const response = yield request.post('/users/register')
             .send({
             name: '<>@/<div> ',
             email: 'harry@domain.com',
