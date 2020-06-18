@@ -21,7 +21,7 @@ const StyledButton = styled.button`
 width: 140px;
 border-radius: 3px;
 letter-spacing: 1.5px;
-margin: 10px;
+margin: 20px;
 &:hover {
     background-color: #2196F3;
 }
