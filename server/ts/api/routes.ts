@@ -8,8 +8,8 @@ export function routes(app: express.Application) {
     
     app.get('/', (request, response) => response.send('success'));
     app.get('*', setRemainingRoutes);
-    app.post('/user/register', registerUser)
-    app.post('/user/login', loginUser)
+    app.post('/users/register', registerUser)
+    app.post('/users/login', loginUser)
 }
 
 module.exports = routes;

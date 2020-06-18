@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import './Form.css';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { loginUser } from '../actions/authActions';
+import classnames from 'classnames';
 
 interface ILoginProps {
-
+    history: any,
+    loginUser: Function,
+    auth: any
 }
 
 interface ILoginState {
@@ -12,11 +18,20 @@ interface ILoginState {
     password: string
     errors: {
         email: string,
-        password: string
+        password: string,
+        emailnotfound: string,
+        passwordincorrect: string
     } 
 }
 
 class Login extends Component<ILoginProps, ILoginState> {
+
+    static propTypes = {
+        loginUser: PropTypes.func.isRequired,
+        auth: PropTypes.object.isRequired,
+        errors: PropTypes.object.isRequired 
+    }
+
     constructor (props: any) {
         super(props);
         this.state = {
@@ -24,11 +39,28 @@ class Login extends Component<ILoginProps, ILoginState> {
             password: '',
             errors: {
                 email: '',
-                password: ''
+                password: '',
+                emailnotfound: '',
+                passwordincorrect:''
             }
         }
 
     }
+
+    componentWillReceiveProps(nextProps: any) {
+        if (nextProps.auth.isAuthenticated) {
+            this.props.history.push('/dashboard');
+        }
+
+        if (nextProps.errors) {
+            this.setState({
+                 errors: nextProps.errors
+                });
+        }
+    }
+
+    
+
     componentDidMount() {
         $(".form-input").focus(function(){
             $(this).parent().addClass("is-active is-completed");
@@ -39,6 +71,10 @@ class Login extends Component<ILoginProps, ILoginState> {
             $(this).parent().removeClass("is-completed");
             $(this).parent().removeClass("is-active");
         })
+        
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.push('dashboard');
+        }
     }
 
 
@@ -51,6 +87,13 @@ class Login extends Component<ILoginProps, ILoginState> {
 
     handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        const userData = {
+            email: this.state.email,
+            password: this.state.password
+        };
+
+        this.props.loginUser(userData);
     }
 
     render() {
@@ -65,7 +108,11 @@ class Login extends Component<ILoginProps, ILoginState> {
 
                     <div className='form-div'>
                         <label className='form-label' htmlFor='email'>Email</label>
-                        <input className='form-input browser-default'
+                        <span className='red-text'>
+                            {errors.email}
+                            {errors.emailnotfound}
+                        </span>
+                        <input className= { classnames('form-input browser-default', {invalid: errors.email || errors.emailnotfound}) }
                         onChange={this.handleChange}
                         value={this.state.email}
                         data-error={errors.email}
@@ -75,7 +122,11 @@ class Login extends Component<ILoginProps, ILoginState> {
                     </div>
                     <div className='form-div'>
                         <label className='form-label' htmlFor='password'>Password</label>
-                        <input className='form-input browser-default'
+                        <span className='red-text'>
+                            {errors.password}
+                            {errors.passwordincorrect}
+                        </span>
+                        <input className={classnames('form-input browser-default', {invalid: errors.password || errors.passwordincorrect}) }
                         onChange={this.handleChange}
                         value={this.state.password}
                         data-error={errors.password}
@@ -95,13 +146,23 @@ class Login extends Component<ILoginProps, ILoginState> {
     }
 }
 
-export default Login;
+const mapStateToProps = (state: any) => ({
+    auth: state.auth,
+    errors: state.errors
+})
+
+export default connect(
+    mapStateToProps,
+    { loginUser }    
+)(Login);
 
 const SubmitButton = styled.button`
 width: 150px;
 border-radius: 3px;
 letter-spacing: 1.5px;
-margin-top: 1rem;`;
+margin-top: 2rem;
+margin-bottom: 2rem;
+margin-left: 1rem;`;
 
 const Icon = styled.i`
 position: relative;
