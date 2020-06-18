@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled, { ThemeProps } from 'styled-components';
+import styled from 'styled-components';
 import Button from './ui/Button';
 
 class Landing extends Component {

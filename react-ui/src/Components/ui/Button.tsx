@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 interface IButtonProps {
@@ -10,7 +10,7 @@ interface IButtonProps {
 function Button({className,href, label }: IButtonProps) {
         return (
             <div>
-            <StyledButton as='a' href={href} className={className + ' ' + 'btn btn-large hoverable'} >{label}</StyledButton>
+            <StyledButton as='a' href={href} className={className +  ' btn btn-large hoverable'} >{label}</StyledButton>
             </div>
         )
     }
