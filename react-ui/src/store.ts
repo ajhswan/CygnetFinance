@@ -6,8 +6,8 @@ const initialState = {};
 
 const middleware = [thunk];
 
-if (process.env.NODE_ENV !== 'production'){
-    const store = createStore(
+//  (process.env.NODE_ENV !== 'production')
+const devStore = createStore(
         rootReducer,
         initialState,
         compose(
@@ -16,15 +16,15 @@ if (process.env.NODE_ENV !== 'production'){
         (window as any).__REDUX_DEVTOOLS_EXTENSION__()
         )   
     );
-} else {
-    const store = createStore(
+
+const prodStore = createStore(
         rootReducer,
         initialState,
         compose(
         applyMiddleware(...middleware),
         )   
     );
-}
 
+const store = (process.env.NODE_ENV !== 'production') ? devStore : prodStore;
 
 export default store;
