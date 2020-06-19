@@ -26,5 +26,6 @@ const prodStore = createStore(
     );
 
 const store = (process.env.NODE_ENV !== 'production') ? devStore : prodStore;
+console.log(store);
 
 export default store;
