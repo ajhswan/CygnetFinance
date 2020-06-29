@@ -1,4 +1,3 @@
-import { parentPort } from "worker_threads";
 
 import express from 'express';
 const path = require('path');

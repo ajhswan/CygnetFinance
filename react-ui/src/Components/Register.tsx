@@ -110,7 +110,7 @@ class Register extends Component<IRegisterProps & RouteComponentProps, IRegister
                     <ReturnHome>
                         <Link href='/'><Icon className='material-icons'>keyboard_backspace</Icon>BACK TO HOME</Link>
                         <h4><b>Register</b> below</h4>
-                        <p>Already have an account? <Link color="true" href='/login'>Log In</Link></p>
+                        <p>Already have an account? <Link color="blue" href='/login'>Log In</Link></p>
                     </ReturnHome>
                     <form noValidate onSubmit={this.handleSubmit}>
                         <div className='form-div'>

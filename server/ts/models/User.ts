@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import Schema = mongoose.Schema;
 import bcrypt from 'bcryptjs';
 import { IUser } from '../types';
+const Schema = mongoose.Schema;
 const SALT_WORK_FACTOR = 10
 
 const UserSchema = new Schema({
