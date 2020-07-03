@@ -31,6 +31,7 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "plaid": "^5.1.0",
+    "react-plaid-link-button": "0.0.4",
     "react-scripts": "^3.4.1",
     "validator": "^13.0.0"
   },

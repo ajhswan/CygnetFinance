@@ -18,3 +18,4 @@ Dockerfile
 docker-compose.yml
 package-lock.json
 react-ui/package-lock.json
+.env
