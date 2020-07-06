@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.sanatizeData = exports.validateRegisterInput = exports.validateLoginInput = void 0;
 const tslib_1 = require("tslib");
 const validator_1 = tslib_1.__importDefault(require("validator"));
 const is_empty_1 = tslib_1.__importDefault(require("is-empty"));

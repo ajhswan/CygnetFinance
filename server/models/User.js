@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.User = void 0;
 const tslib_1 = require("tslib");
 const mongoose_1 = tslib_1.__importDefault(require("mongoose"));
-var Schema = mongoose_1.default.Schema;
 const bcryptjs_1 = tslib_1.__importDefault(require("bcryptjs"));
+const Schema = mongoose_1.default.Schema;
 const SALT_WORK_FACTOR = 10;
 const UserSchema = new Schema({
     name: {

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.loginUser = exports.registerUser = void 0;
 const ValidationService_1 = require("../Services/ValidationService");
 const UserService_1 = require("../Services/UserService");
 function registerUser(request, response) {
