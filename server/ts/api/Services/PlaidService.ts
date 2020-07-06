@@ -4,14 +4,16 @@ import plaid from 'plaid';
 import passport from 'passport';
 import moment from 'moment';
 import mongoose from 'mongoose';
+import { IRequest } from '../../types';
 const router = express.Router();
+
 
 import { Account } from '../../models/Account';
 import { User } from '../../models/User';
 
-const PLAID_CLIENT_ID = '';
-const PLAID_SECRET = '';
-const PLAID_PUBLIC_KEY = '';
+const PLAID_CLIENT_ID = process.env.PLAID_CLIENT as string;
+const PLAID_SECRET = process.env.PLAID_SECRET as string;
+const PLAID_PUBLIC_KEY = process.env.PLAID_PUBLIC_KEY as string;
 
 const client = new plaid.Client(
     PLAID_CLIENT_ID,
@@ -20,12 +22,6 @@ const client = new plaid.Client(
     plaid.environments.development,
     {version: '2019-05-29'}
 );
-
-interface IRequest extends Request {
-    user: {
-        id: string
-    }
-}
 
 export function newAccount(request: IRequest, response: Response): void {
     const PUBLIC_TOKEN = request.body.public_token;

@@ -7,9 +7,9 @@ const plaid_1 = tslib_1.__importDefault(require("plaid"));
 const moment_1 = tslib_1.__importDefault(require("moment"));
 const router = express_1.default.Router();
 const Account_1 = require("../../models/Account");
-const PLAID_CLIENT_ID = '';
-const PLAID_SECRET = '';
-const PLAID_PUBLIC_KEY = '';
+const PLAID_CLIENT_ID = process.env.PLAID_CLIENT;
+const PLAID_SECRET = process.env.PLAID_SECRET;
+const PLAID_PUBLIC_KEY = process.env.PLAID_PUBLIC_KEY;
 const client = new plaid_1.default.Client(PLAID_CLIENT_ID, PLAID_SECRET, PLAID_PUBLIC_KEY, plaid_1.default.environments.development, { version: '2019-05-29' });
 function newAccount(request, response) {
     const PUBLIC_TOKEN = request.body.public_token;

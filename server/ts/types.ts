@@ -1,11 +1,13 @@
 import { Document } from 'mongoose';
+import { Request } from 'express';
 
 export {
     UserRegValues,
     UserRegErrorValues,
     UserLoginValues,
     UserLoginErrorValues,
-    IUser
+    IUser,
+    IRequest
 }
 
     interface UserRegValues {
@@ -36,4 +38,8 @@ export {
         name: string,
         email: string,
         password: string
+    }
+
+    interface IRequest extends Request {
+        user?: any
     }
