@@ -12,7 +12,7 @@ import styled from 'styled-components';
 import Register from './Components/Register';
 import Login from './Components/Login';
 import PrivateRoute from './Components/PrivateRoute';
-import Dashboard from './Components/Dashboard';
+import Dashboard from './Components/ui/Dashboard/Dashboard';
 
 if (localStorage.jwtToken) {
     const token = localStorage.jwtToken;
@@ -64,3 +64,4 @@ overflow: auto;
 width: 600px;
 margin: 0 auto;
 // border: 2px dotted red;`;
+

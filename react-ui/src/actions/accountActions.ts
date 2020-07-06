@@ -8,14 +8,9 @@ interface IPlaidData {
     
 }
 
-interface IDispatch {
-    dispatch
-    type: any,
-    payload: any,
-    getTransactions(data: IPlaidData): void
-}
 
-export const addAccount = (plaidData: IPlaidData) => (dispatch: Dispatch) => {
+
+export const addAccount = (plaidData: IPlaidData) => (dispatch: Dispatch<any>) => {
     const accounts = plaidData.accounts;
     axios
     .post('plaid/accounts/add', plaidData)
@@ -28,7 +23,7 @@ export const addAccount = (plaidData: IPlaidData) => (dispatch: Dispatch) => {
     .catch(error => console.log(error));
 };
 
-export const deleteAccount = (plaidData: IPlaidData) => (dispatch: Dispatch) => {
+export const deleteAccount = (plaidData: IPlaidData) => (dispatch: any) => {
     if (window.confirm('Are you sure you want to remove this account?')) {
         const id = plaidData.id;
         const newAccounts = plaidData.accounts.filter(
@@ -71,7 +66,7 @@ export const setAccountsLoading = () => {
 export const getTransactions = (plaidData: IPlaidData) => (dispatch: Dispatch) => {
     dispatch(setTransactionsLoading());
     axios
-    .post('plaid/accounts/transacitions', plaidData)
+    .post('plaid/accounts/transactions', plaidData)
     .then(response => dispatch({
         type: GET_TRANSACTIONS,
         payload: response.data
