@@ -26,11 +26,11 @@ interface ILoginState {
 
 class Login extends Component<ILoginProps, ILoginState> {
 
-    static propTypes = {
-        loginUser: PropTypes.func.isRequired,
-        auth: PropTypes.object.isRequired,
-        errors: PropTypes.object.isRequired 
-    }
+    // static propTypes = {
+    //     loginUser: PropTypes.func.isRequired,
+    //     auth: PropTypes.object.isRequired,
+    //     errors: PropTypes.object.isRequired 
+    // }
 
     constructor (props: any) {
         super(props);

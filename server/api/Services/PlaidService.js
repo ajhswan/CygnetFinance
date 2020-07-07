@@ -2,20 +2,19 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetchTransactions = exports.fetchAccounts = exports.deleteAccount = exports.newAccount = void 0;
 const tslib_1 = require("tslib");
-const express_1 = tslib_1.__importDefault(require("express"));
 const plaid_1 = tslib_1.__importDefault(require("plaid"));
 const moment_1 = tslib_1.__importDefault(require("moment"));
-const router = express_1.default.Router();
 const Account_1 = require("../../models/Account");
-const PLAID_CLIENT_ID = process.env.PLAID_CLIENT;
-const PLAID_SECRET = process.env.PLAID_SECRET;
-const PLAID_PUBLIC_KEY = process.env.PLAID_PUBLIC_KEY;
+const PLAID_CLIENT_ID = '5eeb93a5c72d7b0013b91f98';
+const PLAID_SECRET = '6ec814e2bbef73729ac7dd0191d505';
+const PLAID_PUBLIC_KEY = '3c16fb36fe08680b6ced44543c6b83';
 const client = new plaid_1.default.Client(PLAID_CLIENT_ID, PLAID_SECRET, PLAID_PUBLIC_KEY, plaid_1.default.environments.development, { version: '2019-05-29' });
 function newAccount(request, response) {
     const PUBLIC_TOKEN = request.body.public_token;
     const userId = request.user.id;
     const institution = request.body.metadata.institution;
     const { name, institution_id } = institution;
+    console.log(client);
     if (PUBLIC_TOKEN) {
         client
             .exchangePublicToken(PUBLIC_TOKEN)
