@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
+const express_1 = tslib_1.__importDefault(require("express"));
+const PlaidController_1 = require("../Controllers/PlaidController");
+const router = express_1.default.Router();
+var ACCESS_TOKEN = null;
+var ITEM_ID = null;
+router.post('/accounts/add', PlaidController_1.receivePublicToken);
+router.delete('/accounts/:id', PlaidController_1.deletePlaidAccount);
+router.get('/accounts', PlaidController_1.fetchPlaidAccounts);
+router.post('/accounts/transactions', PlaidController_1.fetchPlaidTransactions);
+module.exports = router;

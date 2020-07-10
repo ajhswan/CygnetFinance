@@ -11,21 +11,25 @@ import { IRequest } from '../../types';
 import { Account } from '../../models/Account';
 import { User } from '../../models/User';
 
-const PLAID_CLIENT_ID = '5eeb93a5c72d7b0013b91f98';
-const PLAID_SECRET = '6ec814e2bbef73729ac7dd0191d505';
-const PLAID_PUBLIC_KEY = '3c16fb36fe08680b6ced44543c6b83';
+const PLAID_CLIENT_ID = "5eeb93a5c72d7b0013b91f98";
+const PLAID_SECRET = "42fb58da0c3748d845abb2f5b0d3af";
+const PLAID_PUBLIC_KEY = "3c16fb36fe08680b6ced44543c6b83";
+const PLAID_ENV = "sandbox";
 
 const client = new plaid.Client(
-    PLAID_CLIENT_ID,
-    PLAID_SECRET,
-    PLAID_PUBLIC_KEY,
-    plaid.environments.development,
-    {version: '2019-05-29'}
+  PLAID_CLIENT_ID,
+  PLAID_SECRET,
+  PLAID_PUBLIC_KEY,
+  plaid.environments[PLAID_ENV],
+  { version: "2019-05-29" }
 );
+var ACCESS_TOKEN: any = null;
+var PUBLIC_TOKEN = null;
+var ITEM_ID: any = null;
 
 
 export function newAccount(request: IRequest, response: Response): void {
-    const PUBLIC_TOKEN = request.body.public_token;
+    PUBLIC_TOKEN = request.body.public_token;
 
     const userId = request.user.id;
     const institution = request.body.metadata.institution;
@@ -35,8 +39,8 @@ export function newAccount(request: IRequest, response: Response): void {
         client
             .exchangePublicToken(PUBLIC_TOKEN)
             .then(exchangeResponse => {
-                const ACCESS_TOKEN = exchangeResponse.access_token;
-                const ITEM_ID = exchangeResponse.item_id;
+                ACCESS_TOKEN = exchangeResponse.access_token;
+                ITEM_ID = exchangeResponse.item_id;
 
                 Account.findOne({
                     userId: request.user.id,
@@ -96,6 +100,7 @@ export function fetchTransactions(request: Request, response: Response) {
             client
             .getTransactions(ACCESS_TOKEN, thirtyDaysAgo, today)
             .then(result => {
+                console.log(result);
                 transactions.push({
                     accountName: institutionName,
                     transaction: result.transactions
@@ -107,4 +112,42 @@ export function fetchTransactions(request: Request, response: Response) {
             .catch(error => console.log(error));
         });
     }
+}
+
+export function exchangeTokens(request: Request, response: Response) {
+    let PUBLIC_TOKEN = request.body.public_token;
+  // Second, exchange the public token for an access token
+  client.exchangePublicToken(PUBLIC_TOKEN, function(error, tokenResponse) {
+    let ACCESS_TOKEN = tokenResponse.access_token;
+    let ITEM_ID = tokenResponse.item_id;
+    response.json({
+      access_token: ACCESS_TOKEN,
+      item_id: ITEM_ID
+    });
+    console.log("access token below");
+    console.log(ACCESS_TOKEN);
+  });
+};
+
+export function getPlaidTransactions(request: Request, response: Response) {
+    // Pull transactions for the last 30 days
+    let startDate = moment()
+        .subtract(30, "days")
+        .format("YYYY-MM-DD");
+    let endDate = moment().format("YYYY-MM-DD");
+    console.log("made it past variables");
+    client.getTransactions(
+        ACCESS_TOKEN,
+        startDate,
+        endDate,
+        {
+            count: 250,
+            offset: 0
+        },
+    function(error, transactionsResponse) {
+        response.json({ transactions: transactionsResponse });
+        // TRANSACTIONS LOGGED BELOW! 
+        // They will show up in the terminal that you are running nodemon in.
+        console.log(transactionsResponse);
+    });
 }

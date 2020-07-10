@@ -1,6 +1,13 @@
 import { Request, Response } from 'express';
 import { IRequest } from '../../types';
-import { newAccount, deleteAccount, fetchAccounts, fetchTransactions } from '../Services/PlaidService';
+import { 
+    newAccount, 
+    deleteAccount, 
+    fetchAccounts, 
+    fetchTransactions, 
+    exchangeTokens,
+    getPlaidTransactions } 
+    from '../Services/PlaidService';
 
 export function addPlaidAccount(request: Request, response: Response) {
     newAccount(request as any, response);
@@ -16,4 +23,12 @@ export function fetchPlaidAccounts(request: IRequest, response: Response) {
 
 export function fetchPlaidTransactions(request: Request, response: Response) {
     fetchTransactions(request, response);
+}
+//getting palid to work creating this temp conrollder call
+export function receivePublicToken(request: Request, response: Response) {
+    exchangeTokens(request, response);
+}
+//getting plaid to work creating this temp controler call
+export function getTransactions(request: Request, response: Response) {
+    getPlaidTransactions(request, response);
 }

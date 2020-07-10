@@ -1,16 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchTransactions = exports.fetchAccounts = exports.deleteAccount = exports.newAccount = void 0;
+exports.getPlaidTransactions = exports.exchangeTokens = exports.fetchTransactions = exports.fetchAccounts = exports.deleteAccount = exports.newAccount = void 0;
 const tslib_1 = require("tslib");
 const plaid_1 = tslib_1.__importDefault(require("plaid"));
 const moment_1 = tslib_1.__importDefault(require("moment"));
 const Account_1 = require("../../models/Account");
-const PLAID_CLIENT_ID = '5eeb93a5c72d7b0013b91f98';
-const PLAID_SECRET = '6ec814e2bbef73729ac7dd0191d505';
-const PLAID_PUBLIC_KEY = '3c16fb36fe08680b6ced44543c6b83';
-const client = new plaid_1.default.Client(PLAID_CLIENT_ID, PLAID_SECRET, PLAID_PUBLIC_KEY, plaid_1.default.environments.development, { version: '2019-05-29' });
+const PLAID_CLIENT_ID = "5eeb93a5c72d7b0013b91f98";
+const PLAID_SECRET = "42fb58da0c3748d845abb2f5b0d3af";
+const PLAID_PUBLIC_KEY = "3c16fb36fe08680b6ced44543c6b83";
+const PLAID_ENV = "sandbox";
+const client = new plaid_1.default.Client(PLAID_CLIENT_ID, PLAID_SECRET, PLAID_PUBLIC_KEY, plaid_1.default.environments[PLAID_ENV], { version: "2019-05-29" });
+var ACCESS_TOKEN = null;
+var PUBLIC_TOKEN = null;
+var ITEM_ID = null;
 function newAccount(request, response) {
-    const PUBLIC_TOKEN = request.body.public_token;
+    PUBLIC_TOKEN = request.body.public_token;
     const userId = request.user.id;
     const institution = request.body.metadata.institution;
     const { name, institution_id } = institution;
@@ -19,8 +23,8 @@ function newAccount(request, response) {
         client
             .exchangePublicToken(PUBLIC_TOKEN)
             .then(exchangeResponse => {
-            const ACCESS_TOKEN = exchangeResponse.access_token;
-            const ITEM_ID = exchangeResponse.item_id;
+            ACCESS_TOKEN = exchangeResponse.access_token;
+            ITEM_ID = exchangeResponse.item_id;
             Account_1.Account.findOne({
                 userId: request.user.id,
                 institutionId: institution_id
@@ -86,3 +90,33 @@ function fetchTransactions(request, response) {
     }
 }
 exports.fetchTransactions = fetchTransactions;
+function exchangeTokens(request, response) {
+    let PUBLIC_TOKEN = request.body.public_token;
+    client.exchangePublicToken(PUBLIC_TOKEN, function (error, tokenResponse) {
+        let ACCESS_TOKEN = tokenResponse.access_token;
+        let ITEM_ID = tokenResponse.item_id;
+        response.json({
+            access_token: ACCESS_TOKEN,
+            item_id: ITEM_ID
+        });
+        console.log("access token below");
+        console.log(ACCESS_TOKEN);
+    });
+}
+exports.exchangeTokens = exchangeTokens;
+;
+function getPlaidTransactions(request, response) {
+    let startDate = moment_1.default()
+        .subtract(30, "days")
+        .format("YYYY-MM-DD");
+    let endDate = moment_1.default().format("YYYY-MM-DD");
+    console.log("made it past variables");
+    client.getTransactions(ACCESS_TOKEN, startDate, endDate, {
+        count: 250,
+        offset: 0
+    }, function (error, transactionsResponse) {
+        response.json({ transactions: transactionsResponse });
+        console.log(transactionsResponse);
+    });
+}
+exports.getPlaidTransactions = getPlaidTransactions;

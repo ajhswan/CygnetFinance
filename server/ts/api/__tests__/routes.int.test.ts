@@ -18,10 +18,10 @@ beforeAll(async () => {
     await mongoose.connect(dbURI, options); 
 })
 
-describe('POST /users/register', () => {
+describe('POST /register', () => {
 
     test('Success Test - Register new user', async (done) => {
-            const response = await request.post('/users/register')
+            const response = await request.post('/register')
             .send({ 
                 name: 'barry',
                 email: 'barry@domain.com',
@@ -34,7 +34,7 @@ describe('POST /users/register', () => {
     })
 
     test('Fail Test - Register new user: missing name', async (done) => {
-        const response = await request.post('/users/register')
+        const response = await request.post('/register')
             .send({ 
                 name: '',
                 email: 'barry@domain.com',
@@ -47,7 +47,7 @@ describe('POST /users/register', () => {
     })
 
     test('Fail Test - Register new user: missing email', async (done) => {
-        const response = await request.post('/users/register')
+        const response = await request.post('/register')
             .send({ 
                 name: 'barry',
                 email: '',
@@ -60,7 +60,7 @@ describe('POST /users/register', () => {
     })
 
     test('Fail Test - Register new user: invalid email', async (done) => {
-        const response = await request.post('/users/register')
+        const response = await request.post('/register')
             .send({ 
                 name: 'barry',
                 email: 'barry.com',
@@ -73,7 +73,7 @@ describe('POST /users/register', () => {
     })
 
     test('Fail Test - Register new user: missing password', async (done) => {
-        const response = await request.post('/users/register')
+        const response = await request.post('/register')
             .send({ 
                 name: 'barry',
                 email: 'barry@domain.com',
@@ -86,7 +86,7 @@ describe('POST /users/register', () => {
     })
 
     test('Fail Test - Register new user: missing password2', async (done) => {
-        const response = await request.post('/users/register')
+        const response = await request.post('/register')
             .send({ 
                 name: 'barry',
                 email: 'barry@domain.com',
@@ -99,7 +99,7 @@ describe('POST /users/register', () => {
     })
 
     test('Fail Test - Register new user: name space', async (done) => {
-        const response = await request.post('/users/register')
+        const response = await request.post('/register')
             .send({ 
                 name: ' ',
                 email: 'barry@domain.com',
@@ -112,7 +112,7 @@ describe('POST /users/register', () => {
     })
 
     test('Fail Test - Register new user: name specialChar', async (done) => {
-        const response = await request.post('/users/register')
+        const response = await request.post('/register')
             .send({ 
                 name: '<>@/<div> ',
                 email: 'harry@domain.com',

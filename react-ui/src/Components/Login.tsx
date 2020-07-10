@@ -47,7 +47,7 @@ class Login extends Component<ILoginProps, ILoginState> {
 
     }
 
-    componentWillReceiveProps(nextProps: any) {
+    UNSAFE_componentWillReceiveProps(nextProps: any) {
         if (nextProps.auth.isAuthenticated) {
             this.props.history.push('/dashboard');
         }

@@ -32,12 +32,12 @@ interface IRegisterState {
 
 class Register extends Component<IRegisterProps & RouteComponentProps, IRegisterState> {
 
-    static propTypes = {
-        registerUser: PropTypes.func.isRequired,
-        auth: PropTypes.object.isRequired,
-        errors: PropTypes.object.isRequired
+    // static propTypes = {
+    //     registerUser: PropTypes.func.isRequired,
+    //     auth: PropTypes.object.isRequired,
+    //     errors: PropTypes.object.isRequired
     
-    }
+    // }
 
     constructor(props: any) {
         super(props);
@@ -58,7 +58,7 @@ class Register extends Component<IRegisterProps & RouteComponentProps, IRegister
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentWillReceiveProps(nextProps: any) {
+    UNSAFE_componentWillReceiveProps(nextProps: any) {
         if (nextProps.errors) {
             this.setState({
                 errors: nextProps.errors

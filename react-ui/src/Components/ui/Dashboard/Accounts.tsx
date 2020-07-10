@@ -57,6 +57,8 @@ class Accounts extends Component<IAccountsProps> {
             metadata: metadata,
             accounts: accounts
         };
+
+        console.log(plaidData);
         
         this.props.addAccount(plaidData);
     };
@@ -79,12 +81,12 @@ class Accounts extends Component<IAccountsProps> {
     render() {
         const { user, accounts } = this.props;
         const { transactions, transactionsLoading } = this.props.plaid;
-
+        console.log(accounts);
         let accountItems = accounts.map(account => (
-            <li key={account._id} style={{ marginTop: '1rem '}}>
+            <li key={account.item_id} style={{ marginTop: '1rem '}}>
                 <button 
                 style={{ marginRight: '1rem' }} 
-                onClick={this.onDeleteClick.bind(this, account._id)}
+                onClick={this.onDeleteClick.bind(this, account.item_id)}
                 className='btn btn-small btn-floating waves-effect waves-light hoverable red accent-3'
                 >
                     <i className='material-icons'>delete</i>
@@ -165,9 +167,9 @@ class Accounts extends Component<IAccountsProps> {
                             className: 'btn btn-large waves-effect eaves-light hoverable blue accent-3 main-btn'
                         }}
                         plaidLinkProps={{
-                            clientName: process.env.PLAID_CLIENT as string,
-                            key: process.env.PLAID_KEY as string,
-                            env: 'development',
+                            clientName: 'Cygnet Finance',
+                            key: '3c16fb36fe08680b6ced44543c6b83',
+                            env: 'sandbox',
                             product: ['transactions'],
                             onSuccess: this.handleOnSuccess
                         }}

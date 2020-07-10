@@ -16,17 +16,17 @@ interface IDashboardProps {
 
 class Dashboard extends Component<IDashboardProps> {
 
-    static propTypes = {
-        logoutUser: PropTypes.func.isRequired,
-        getAccounts: PropTypes.func.isRequired,
-        addAccount: PropTypes.func.isRequired,
-        plaid: PropTypes.object.isRequired,
-        auth: PropTypes.object.isRequired
-    };
+    // static propTypes = {
+    //     logoutUser: PropTypes.func.isRequired,
+    //     getAccounts: PropTypes.func.isRequired,
+    //     addAccount: PropTypes.func.isRequired,
+    //     plaid: PropTypes.object.isRequired,
+    //     auth: PropTypes.object.isRequired
+    // };
 
-    componentDidMount() {
-        this.props.getAccounts();
-    }
+    // componentDidMount() {
+    //     this.props.getAccounts();
+    // }
 
     onLogoutClick = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
@@ -38,22 +38,25 @@ class Dashboard extends Component<IDashboardProps> {
             public_token: token,
             metadata: metadata
         };
-
+        console.log(plaidData);
         this.props.addAccount(plaidData);
     }
 
     render() {
         const { user } = this.props.auth;
         const { accounts, accountsLoading } = this.props.plaid;
-
+        console.log(this.props.auth, this.props.plaid);
         let dashboardContent;
 
         if (accounts === null || accountsLoading) {
-            dashboardContent = <p className='center-align'>Loading...</p>;
+            console.log('hitting first if', accountsLoading);
+            return <p className='center-align'>Loading...</p>;
         } else if (accounts.length > 0) {
-            dashboardContent = <Accounts user={user} accounts={accounts} />;
+            console.log('accounts hit', accounts)
+            return <Accounts user={user} accounts={accounts} />;
         } else {
-            dashboardContent = (
+            console.log('final else hit');
+            return (
                 <div className='row'>
                     <div className='col s12 center-align'>
                         <h4>
@@ -67,9 +70,9 @@ class Dashboard extends Component<IDashboardProps> {
                                 className:'btn btn-larg waves-effect waves-light hoverable blue accent-3 main-btn'
                             }}
                             plaidLinkProps={{
-                                clientName: process.env.PLAID_CLIENT as string,
-                                key: process.env.PLAID_KEY as string,
-                                env: 'development',
+                                clientName: 'Cygnet Finance',
+                                key: '3c16fb36fe08680b6ced44543c6b83',
+                                env: 'sandbox',
                                 product: ['transactions'],
                                 onSuccess: this.handleOnSuccess
                             }}
@@ -85,7 +88,7 @@ class Dashboard extends Component<IDashboardProps> {
             );
         }
 
-        return <div className='container'>{dashboardContent}</div>;
+        // return <div className='container'>{dashboardContent}</div>;
         
     }
 }

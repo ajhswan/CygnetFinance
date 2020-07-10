@@ -19,24 +19,30 @@ if (!isDev && cluster.isMaster) {
 }
 else {
     const app = express_1.default();
-    const routes = require('./api/routes');
+    const routes = require('./api/routes/');
     const bodyParser = require('body-parser');
     const DbService = require('./api/Services/DbService');
     const passport = require('passport');
+    const cors = require('cors');
+    const plaid = require('./api/routes/plaid');
+    const users = require('./api/routes/users');
+    app.use(cors());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
+    DbService.DbConnect(dbURI);
+    app.use(passport.initialize());
+    require('./config/passport')(passport);
+    app.use('/api/users', users);
+    app.use('/api/plaid', plaid);
     app.use(express_1.default.static(path.resolve(__dirname, '../react-ui/build')));
     app.get('/api', function (request, response) {
         response.set('Content-Type', 'application/json');
         response.send('{"message": "Hello from the server!"}');
     });
-    app.get('*', function (request, response) {
-        response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
+    app.use((request, response) => {
+        response.status(404)
+            .send('Route does not exist');
     });
-    app.use(passport.initialize());
-    require('./config/passport')(passport);
-    DbService.DbConnect(dbURI);
-    routes(app);
     app.listen(PORT, function () {
         console.error(`Node ${isDev ? 'dev server' : 'cluster worker ' + process.pid}: listening on port ${PORT}`);
     });
