@@ -6,6 +6,8 @@ const numCPUs = require('os').cpus().length;
 const isDev = process.env.NODE_ENV !== 'production';
 const PORT = process.env.PORT || 5000;
 const dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/cygnetFinance';
+
+
 // Multi-process to utilize all CPU cores.
 if (!isDev && cluster.isMaster) {
     console.error(`Node cluster master ${process.pid} is running`);
@@ -21,6 +23,7 @@ if (!isDev && cluster.isMaster) {
 
 } else {
     const app = express();
+    const errorHandler = require('errorhandler');
     const routes = require('./api/routes/');
     const bodyParser = require('body-parser');
     const DbService = require('./api/Services/DbService');

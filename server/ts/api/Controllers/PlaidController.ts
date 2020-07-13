@@ -24,11 +24,11 @@ export function fetchPlaidAccounts(request: IRequest, response: Response) {
 export function fetchPlaidTransactions(request: Request, response: Response) {
     fetchTransactions(request, response);
 }
-//getting palid to work creating this temp conrollder call
+//getting palid to work creating this temp controller used for testing 
 export function receivePublicToken(request: Request, response: Response) {
     exchangeTokens(request, response);
 }
-//getting plaid to work creating this temp controler call
+//getting plaid to work creating this temp controller used for testing
 export function getTransactions(request: Request, response: Response) {
     getPlaidTransactions(request, response);
 }

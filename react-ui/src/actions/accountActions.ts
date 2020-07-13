@@ -13,7 +13,7 @@ interface IPlaidData {
 export const addAccount = (plaidData: IPlaidData) => (dispatch: Dispatch<any>) => {
     const accounts = plaidData.accounts;
     axios
-    .post('plaid/accounts/add', plaidData)
+    .post('/api/plaid/accounts/add', plaidData)
     .then(response => dispatch({
         type: ADD_ACCOUNT,
         payload: response.data
@@ -27,10 +27,10 @@ export const deleteAccount = (plaidData: IPlaidData) => (dispatch: any) => {
     if (window.confirm('Are you sure you want to remove this account?')) {
         const id = plaidData.id;
         const newAccounts = plaidData.accounts.filter(
-            (account: any) => account._id !== id
+            (account: any) => account.item_id !== id
         );
         axios
-        .delete(`/plaid/accounts/${id}`)
+        .delete(`/api/plaid/accounts/${id}`)
         .then(response => dispatch({
                 type: DELETE_ACCOUNT,
                 payload: id
@@ -42,9 +42,9 @@ export const deleteAccount = (plaidData: IPlaidData) => (dispatch: any) => {
 }
 
 export const getAccounts = () => (dispatch: Dispatch) => {
-    dispatch(setAccountsLoading());
+    // dispatch(setAccountsLoading());
     axios
-    .get('/plaid/accounts')
+    .get('/api/plaid/accounts')
     .then(response => dispatch({
         type: GET_ACCOUNTS,
         payload: response.data
@@ -64,9 +64,9 @@ export const setAccountsLoading = () => {
 }
 
 export const getTransactions = (plaidData: IPlaidData) => (dispatch: Dispatch) => {
-    dispatch(setTransactionsLoading());
+    // dispatch(setTransactionsLoading());
     axios
-    .post('plaid/accounts/transactions', plaidData)
+    .post('/api/plaid/accounts/transactions', plaidData)
     .then(response => dispatch({
         type: GET_TRANSACTIONS,
         payload: response.data

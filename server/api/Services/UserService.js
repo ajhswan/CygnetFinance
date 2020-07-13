@@ -68,13 +68,13 @@ function authenticateUser(request, response) {
                         response.status(200)
                             .json({
                             success: true,
-                            token: "Bearer" + token
+                            token: "Bearer " + token
                         });
                     });
                 }
                 else {
                     return response
-                        .status(400)
+                        .status(401)
                         .json({ passwordincorrect: "Password incorrect" });
                 }
             });

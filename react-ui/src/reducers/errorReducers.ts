@@ -1,8 +1,8 @@
 import { GET_ERRORS } from '../actions/types';
 
 interface errorActions {
-    type: unknown,
-    payload: unknown
+    type: any,
+    payload: any
 } 
 
 const initailState = {};

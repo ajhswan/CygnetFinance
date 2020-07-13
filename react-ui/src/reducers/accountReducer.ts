@@ -26,6 +26,12 @@ export default function(state = initialState, action: any) {
                     (account: any) => account._id !== action.payload
                 )
             };
+        case GET_ACCOUNTS:
+             return {
+                 ...state,
+                 accounts: action.payload,
+                 accountsLoading: false
+             }
         case GET_TRANSACTIONS:
             return {
                 ...state,

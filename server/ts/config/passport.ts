@@ -17,14 +17,16 @@ const options = {
 module.exports = (passport: any) => {
     passport.use(
         new JwtStrategy(options, (jwt_payload: any, done: any) => {
+            console.log('from passport.ts ',jwt_payload);
             User.findById(jwt_payload.id)
             .then(user => {
                 if (user) {
                     return done(null, user);
-                }
-                return done(null, false);
+                } else {
+                    return done(null, false);
+                }       
             })
-            .catch(error => console.log(error));
+            .catch(error => done(error, null));
         })
     );
 }

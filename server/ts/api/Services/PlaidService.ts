@@ -10,7 +10,7 @@ import { IRequest } from '../../types';
 
 import { Account } from '../../models/Account';
 import { User } from '../../models/User';
-
+//HARD CODED NEED TO SETUP DOTENV AND MOVE INTO .ENV FILE
 const PLAID_CLIENT_ID = "5eeb93a5c72d7b0013b91f98";
 const PLAID_SECRET = "42fb58da0c3748d845abb2f5b0d3af";
 const PLAID_PUBLIC_KEY = "3c16fb36fe08680b6ced44543c6b83";
@@ -29,13 +29,13 @@ var ITEM_ID: any = null;
 
 
 export function newAccount(request: IRequest, response: Response): void {
+    console.log('this is PlaidService.newAccount',request.user);
     PUBLIC_TOKEN = request.body.public_token;
 
-    const userId = request.user.id;
+    const userId = request.user._id;
     const institution = request.body.metadata.institution;
     const { name, institution_id } = institution;
-     console.log(client);
-    if (PUBLIC_TOKEN) {
+    // if (PUBLIC_TOKEN) {
         client
             .exchangePublicToken(PUBLIC_TOKEN)
             .then(exchangeResponse => {
@@ -43,17 +43,19 @@ export function newAccount(request: IRequest, response: Response): void {
                 ITEM_ID = exchangeResponse.item_id;
 
                 Account.findOne({
-                    userId: request.user.id,
+                    userId: request.user._id,
                     institutionId: institution_id
                 })
                 .then(account => {
+                    console.log(account);
                     if (account) {
                         console.log('Account already exists');
                     } else {
+                        console.log('PlaidServices, hit save else')
                         const newAccount = new Account({
                             userId: userId,
                             accessToken: ACCESS_TOKEN,
-                            itemID: ITEM_ID,
+                            itemId: ITEM_ID,
                             institutionId: institution_id,
                             institutionName: name
                         });
@@ -64,7 +66,7 @@ export function newAccount(request: IRequest, response: Response): void {
                 .catch(error => console.log('Mongo Error',error));
             })
             .catch(error => console.log('Plaid Error', error));
-    }
+    // }
 }
 
 export function deleteAccount(request: Request, response: Response) {
@@ -85,7 +87,7 @@ export function fetchAccounts(request: IRequest, response: Response) {
 export function fetchTransactions(request: Request, response: Response) {
     const now = moment();
     const today = now.format('YYYY-MM-DD');
-    const thirtyDaysAgo = now.subtract(30, 'days').format('YYY-MM-DD');
+    const thirtyDaysAgo = now.subtract(30, 'days').format('YYYY-MM-DD');
 
     let transactions: plaid.Transaction[] | any = [];
 
@@ -100,11 +102,12 @@ export function fetchTransactions(request: Request, response: Response) {
             client
             .getTransactions(ACCESS_TOKEN, thirtyDaysAgo, today)
             .then(result => {
-                console.log(result);
                 transactions.push({
                     accountName: institutionName,
                     transaction: result.transactions
                 });
+                console.log(transactions);
+                console.log(transactions.length, accounts.length)
                 if (transactions.length === accounts.length) {
                     response.json(transactions);
                 }
@@ -113,7 +116,7 @@ export function fetchTransactions(request: Request, response: Response) {
         });
     }
 }
-
+//FUNCTION USED FOR TESTING TO EXCHANGE PUBLIC TOKEN FOR ACCESS TOKEN - DO NOT REMOVE
 export function exchangeTokens(request: Request, response: Response) {
     let PUBLIC_TOKEN = request.body.public_token;
   // Second, exchange the public token for an access token
@@ -128,7 +131,7 @@ export function exchangeTokens(request: Request, response: Response) {
     console.log(ACCESS_TOKEN);
   });
 };
-
+// FUNCTION USED FOR TESTING GET TRANSACTION FUNCTIONALITY--DO NOT REMOVE
 export function getPlaidTransactions(request: Request, response: Response) {
     // Pull transactions for the last 30 days
     let startDate = moment()

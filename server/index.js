@@ -19,6 +19,7 @@ if (!isDev && cluster.isMaster) {
 }
 else {
     const app = express_1.default();
+    const errorHandler = require('errorhandler');
     const routes = require('./api/routes/');
     const bodyParser = require('body-parser');
     const DbService = require('./api/Services/DbService');

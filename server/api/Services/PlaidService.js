@@ -14,40 +14,40 @@ var ACCESS_TOKEN = null;
 var PUBLIC_TOKEN = null;
 var ITEM_ID = null;
 function newAccount(request, response) {
+    console.log('this is PlaidService.newAccount', request.user);
     PUBLIC_TOKEN = request.body.public_token;
-    const userId = request.user.id;
+    const userId = request.user._id;
     const institution = request.body.metadata.institution;
     const { name, institution_id } = institution;
-    console.log(client);
-    if (PUBLIC_TOKEN) {
-        client
-            .exchangePublicToken(PUBLIC_TOKEN)
-            .then(exchangeResponse => {
-            ACCESS_TOKEN = exchangeResponse.access_token;
-            ITEM_ID = exchangeResponse.item_id;
-            Account_1.Account.findOne({
-                userId: request.user.id,
-                institutionId: institution_id
-            })
-                .then(account => {
-                if (account) {
-                    console.log('Account already exists');
-                }
-                else {
-                    const newAccount = new Account_1.Account({
-                        userId: userId,
-                        accessToken: ACCESS_TOKEN,
-                        itemID: ITEM_ID,
-                        institutionId: institution_id,
-                        institutionName: name
-                    });
-                    newAccount.save().then(account => response.json(account));
-                }
-            })
-                .catch(error => console.log('Mongo Error', error));
+    client
+        .exchangePublicToken(PUBLIC_TOKEN)
+        .then(exchangeResponse => {
+        ACCESS_TOKEN = exchangeResponse.access_token;
+        ITEM_ID = exchangeResponse.item_id;
+        Account_1.Account.findOne({
+            userId: request.user._id,
+            institutionId: institution_id
         })
-            .catch(error => console.log('Plaid Error', error));
-    }
+            .then(account => {
+            console.log(account);
+            if (account) {
+                console.log('Account already exists');
+            }
+            else {
+                console.log('PlaidServices, hit save else');
+                const newAccount = new Account_1.Account({
+                    userId: userId,
+                    accessToken: ACCESS_TOKEN,
+                    itemId: ITEM_ID,
+                    institutionId: institution_id,
+                    institutionName: name
+                });
+                newAccount.save().then(account => response.json(account));
+            }
+        })
+            .catch(error => console.log('Mongo Error', error));
+    })
+        .catch(error => console.log('Plaid Error', error));
 }
 exports.newAccount = newAccount;
 function deleteAccount(request, response) {
@@ -67,7 +67,7 @@ exports.fetchAccounts = fetchAccounts;
 function fetchTransactions(request, response) {
     const now = moment_1.default();
     const today = now.format('YYYY-MM-DD');
-    const thirtyDaysAgo = now.subtract(30, 'days').format('YYY-MM-DD');
+    const thirtyDaysAgo = now.subtract(30, 'days').format('YYYY-MM-DD');
     let transactions = [];
     const accounts = request.body;
     if (accounts) {
@@ -81,6 +81,8 @@ function fetchTransactions(request, response) {
                     accountName: institutionName,
                     transaction: result.transactions
                 });
+                console.log(transactions);
+                console.log(transactions.length, accounts.length);
                 if (transactions.length === accounts.length) {
                     response.json(transactions);
                 }
