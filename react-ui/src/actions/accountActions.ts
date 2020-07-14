@@ -27,7 +27,7 @@ export const deleteAccount = (plaidData: IPlaidData) => (dispatch: any) => {
     if (window.confirm('Are you sure you want to remove this account?')) {
         const id = plaidData.id;
         const newAccounts = plaidData.accounts.filter(
-            (account: any) => account.item_id !== id
+            (account: any) => account._id !== id
         );
         axios
         .delete(`/api/plaid/accounts/${id}`)
@@ -42,7 +42,7 @@ export const deleteAccount = (plaidData: IPlaidData) => (dispatch: any) => {
 }
 
 export const getAccounts = () => (dispatch: Dispatch) => {
-    // dispatch(setAccountsLoading());
+    dispatch(setAccountsLoading());
     axios
     .get('/api/plaid/accounts')
     .then(response => dispatch({
@@ -64,13 +64,15 @@ export const setAccountsLoading = () => {
 }
 
 export const getTransactions = (plaidData: IPlaidData) => (dispatch: Dispatch) => {
-    // dispatch(setTransactionsLoading());
+    dispatch(setTransactionsLoading());
     axios
     .post('/api/plaid/accounts/transactions', plaidData)
     .then(response => dispatch({
         type: GET_TRANSACTIONS,
         payload: response.data
         })
+    )
+    .then(response => console.log(response)
     )
     .catch(error => dispatch({
         type: GET_TRANSACTIONS,

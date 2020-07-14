@@ -1,8 +1,15 @@
 import { ADD_ACCOUNT, DELETE_ACCOUNT, GET_ACCOUNTS, ACCOUNTS_LOADING, GET_TRANSACTIONS, TRANSACTIONS_LOADING } from '../actions/types';
 
-const initialState = {
-    accounts: [] as any,
-    transactions: [] as any,
+interface IState {
+    accounts: any[],
+    transactions: any[],
+    accountsLoading: boolean,
+    transactionsLoading: boolean
+};
+
+const initialState: IState = {
+    accounts: [],
+    transactions: [],
     accountsLoading: false,
     transactionsLoading: false
 };
@@ -35,19 +42,13 @@ export default function(state = initialState, action: any) {
         case GET_TRANSACTIONS:
             return {
                 ...state,
-                accounts: action.payload,
-                accountsLoading: false
+                transactions: action.payload,
+                transactionsLoading: false
             };
         case TRANSACTIONS_LOADING:
             return {
                 ...state,
                 transactionsLoading: true
-            };
-        case GET_TRANSACTIONS: 
-            return {
-                ...state,
-                transactions: action.payload,
-                transactionsLoading: false
             };
         default:
             return state;

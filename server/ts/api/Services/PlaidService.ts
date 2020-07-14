@@ -29,7 +29,6 @@ var ITEM_ID: any = null;
 
 
 export function newAccount(request: IRequest, response: Response): void {
-    console.log('this is PlaidService.newAccount',request.user);
     PUBLIC_TOKEN = request.body.public_token;
 
     const userId = request.user._id;
@@ -47,11 +46,8 @@ export function newAccount(request: IRequest, response: Response): void {
                     institutionId: institution_id
                 })
                 .then(account => {
-                    console.log(account);
                     if (account) {
-                        console.log('Account already exists');
                     } else {
-                        console.log('PlaidServices, hit save else')
                         const newAccount = new Account({
                             userId: userId,
                             accessToken: ACCESS_TOKEN,
@@ -70,6 +66,7 @@ export function newAccount(request: IRequest, response: Response): void {
 }
 
 export function deleteAccount(request: Request, response: Response) {
+    console.log(request.params)
     Account.findById(request.params.id)
     .then(account => {
         account?.remove()
@@ -92,6 +89,7 @@ export function fetchTransactions(request: Request, response: Response) {
     let transactions: plaid.Transaction[] | any = [];
 
     const accounts = request.body;
+    console.log(accounts);
     
 
     if (accounts) {
@@ -102,12 +100,11 @@ export function fetchTransactions(request: Request, response: Response) {
             client
             .getTransactions(ACCESS_TOKEN, thirtyDaysAgo, today)
             .then(result => {
+                console.log(result);
                 transactions.push({
                     accountName: institutionName,
-                    transaction: result.transactions
+                    transactions: result.transactions
                 });
-                console.log(transactions);
-                console.log(transactions.length, accounts.length)
                 if (transactions.length === accounts.length) {
                     response.json(transactions);
                 }
@@ -127,8 +124,6 @@ export function exchangeTokens(request: Request, response: Response) {
       access_token: ACCESS_TOKEN,
       item_id: ITEM_ID
     });
-    console.log("access token below");
-    console.log(ACCESS_TOKEN);
   });
 };
 // FUNCTION USED FOR TESTING GET TRANSACTION FUNCTIONALITY--DO NOT REMOVE

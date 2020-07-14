@@ -24,9 +24,9 @@ class Dashboard extends Component<IDashboardProps> {
     //     auth: PropTypes.object.isRequired
     // };
 
-    // componentDidMount() {
-    //     this.props.getAccounts();
-    // }
+    componentDidMount() {
+        this.props.getAccounts();
+    }
 
     onLogoutClick = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
@@ -38,24 +38,19 @@ class Dashboard extends Component<IDashboardProps> {
             public_token: token,
             metadata: metadata
         };
-        console.log(plaidData);
         this.props.addAccount(plaidData);
     }
 
     render() {
         const { user } = this.props.auth;
         const { accounts, accountsLoading } = this.props.plaid;
-        console.log(this.props.auth, this.props.plaid);
         let dashboardContent;
 
         if (accounts === null || accountsLoading) {
-            console.log('hitting first if', accountsLoading);
             return <p className='center-align'>Loading...</p>;
         } else if (accounts.length > 0) {
-            console.log('accounts hit', accounts)
             return <Accounts user={user} accounts={accounts} />;
         } else {
-            console.log('final else hit');
             return (
                 <div className='row'>
                     <div className='col s12 center-align'>

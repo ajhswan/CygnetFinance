@@ -57,13 +57,11 @@ class Accounts extends Component<IAccountsProps> {
             metadata: metadata,
             accounts: accounts
         };
-
-        console.log(plaidData);
         
         this.props.addAccount(plaidData);
     };
 
-    onDeleteClick = (id: unknown) => {
+    onDeleteClick = (id: any) => {
         const { accounts } = this.props;
         const accountData = {
             id: id,
@@ -80,13 +78,16 @@ class Accounts extends Component<IAccountsProps> {
 
     render() {
         const { user, accounts } = this.props;
+        console.log(this.props);
+
         const { transactions, transactionsLoading } = this.props.plaid;
-        console.log(accounts);
+        console.log(transactions);
+
         let accountItems = accounts.map(account => (
-            <li key={account.item_id} style={{ marginTop: '1rem '}}>
+            <li key={account._id} style={{ marginTop: '1rem '}}>
                 <button 
                 style={{ marginRight: '1rem' }} 
-                onClick={this.onDeleteClick.bind(this, account.item_id)}
+                onClick={this.onDeleteClick.bind(this, account._id)}
                 className='btn btn-small btn-floating waves-effect waves-light hoverable red accent-3'
                 >
                     <i className='material-icons'>delete</i>
@@ -186,7 +187,9 @@ class Accounts extends Component<IAccountsProps> {
                         ) : (
                             <React.Fragment>
                             <p className='grey-text text-darken-1'>
-                                You have <b>{transactionsData.length}</b> Linked
+                                You have <b>{transactionsData.length} </b>
+                                transactions from your
+                                <b> {accounts.length}</b> linked
                                 {accounts.length > 1 ? (
                                     <span> accounts </span>
                                 ) : (

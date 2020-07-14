@@ -14,7 +14,6 @@ var ACCESS_TOKEN = null;
 var PUBLIC_TOKEN = null;
 var ITEM_ID = null;
 function newAccount(request, response) {
-    console.log('this is PlaidService.newAccount', request.user);
     PUBLIC_TOKEN = request.body.public_token;
     const userId = request.user._id;
     const institution = request.body.metadata.institution;
@@ -29,12 +28,9 @@ function newAccount(request, response) {
             institutionId: institution_id
         })
             .then(account => {
-            console.log(account);
             if (account) {
-                console.log('Account already exists');
             }
             else {
-                console.log('PlaidServices, hit save else');
                 const newAccount = new Account_1.Account({
                     userId: userId,
                     accessToken: ACCESS_TOKEN,
@@ -51,6 +47,7 @@ function newAccount(request, response) {
 }
 exports.newAccount = newAccount;
 function deleteAccount(request, response) {
+    console.log(request.params);
     Account_1.Account.findById(request.params.id)
         .then(account => {
         account === null || account === void 0 ? void 0 : account.remove().then(() => response.json({ success: true }));
@@ -70,6 +67,7 @@ function fetchTransactions(request, response) {
     const thirtyDaysAgo = now.subtract(30, 'days').format('YYYY-MM-DD');
     let transactions = [];
     const accounts = request.body;
+    console.log(accounts);
     if (accounts) {
         accounts.forEach(function (account) {
             const ACCESS_TOKEN = account.accessToken;
@@ -77,12 +75,11 @@ function fetchTransactions(request, response) {
             client
                 .getTransactions(ACCESS_TOKEN, thirtyDaysAgo, today)
                 .then(result => {
+                console.log(result);
                 transactions.push({
                     accountName: institutionName,
-                    transaction: result.transactions
+                    transactions: result.transactions
                 });
-                console.log(transactions);
-                console.log(transactions.length, accounts.length);
                 if (transactions.length === accounts.length) {
                     response.json(transactions);
                 }
@@ -101,8 +98,6 @@ function exchangeTokens(request, response) {
             access_token: ACCESS_TOKEN,
             item_id: ITEM_ID
         });
-        console.log("access token below");
-        console.log(ACCESS_TOKEN);
     });
 }
 exports.exchangeTokens = exchangeTokens;

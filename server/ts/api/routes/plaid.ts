@@ -26,6 +26,6 @@ router.post(
 
 router.delete('/accounts/:id', passport.authenticate('jwt', {session: false}), deletePlaidAccount);
 router.get('/accounts', passport.authenticate('jwt', {session: false}), fetchPlaidAccounts );
-router.post('/accounts/transactions',passport.authenticate('jwt', {session: false}), fetchPlaidTransactions);
+router.post('/accounts/transactions', passport.authenticate('jwt', {session: false}), fetchPlaidTransactions);
 
 module.exports = router
