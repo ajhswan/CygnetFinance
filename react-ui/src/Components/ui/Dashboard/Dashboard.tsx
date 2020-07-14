@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../../../actions/authActions';
 import { getAccounts, addAccount } from '../../../actions/accountActions';
 import Accounts from './Accounts';
+import Spinner from '../Spinner';
 
 interface IDashboardProps {
     logoutUser: Function,
@@ -47,7 +48,7 @@ class Dashboard extends Component<IDashboardProps> {
         let dashboardContent;
 
         if (accounts === null || accountsLoading) {
-            return <p className='center-align'>Loading...</p>;
+            return <Spinner />;
         } else if (accounts.length > 0) {
             return <Accounts user={user} accounts={accounts} />;
         } else {

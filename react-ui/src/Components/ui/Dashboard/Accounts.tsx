@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { getTransactions, addAccount, deleteAccount } from '../../../actions/accountActions';
 import { logoutUser } from '../../../actions/authActions';
 import MaterialTable, { Column } from 'material-table';
-import { STATES } from 'mongoose';
+import Spinner from '../Spinner';
 
 interface IAccountsProps {
     accounts: any[],
@@ -78,10 +78,8 @@ class Accounts extends Component<IAccountsProps> {
 
     render() {
         const { user, accounts } = this.props;
-        console.log(this.props);
 
         const { transactions, transactionsLoading } = this.props.plaid;
-        console.log(transactions);
 
         let accountItems = accounts.map(account => (
             <li key={account._id} style={{ marginTop: '1rem '}}>
@@ -183,9 +181,9 @@ class Accounts extends Component<IAccountsProps> {
                             <b>Transactions</b>
                         </h5>
                         {transactionsLoading ? (
-                            <p className='grey-text text-darken-1'>Fetching transactions...</p>
+                            <Spinner/>
                         ) : (
-                            <React.Fragment>
+                            <React.Fragment key='key'>
                             <p className='grey-text text-darken-1'>
                                 You have <b>{transactionsData.length} </b>
                                 transactions from your
