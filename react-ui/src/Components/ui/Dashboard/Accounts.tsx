@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import PlaidLinkButton from 'react-plaid-link-button';
+// import { PlaidLink } from 'react-plaid-link';
+import PlaidButton from '../PlaidButton'; //Import was to try bring in a functional component, not working
 import { connect } from 'react-redux';
 import { getTransactions, addAccount, deleteAccount } from '../../../actions/accountActions';
 import { logoutUser } from '../../../actions/authActions';
 import MaterialTable, { Column } from 'material-table';
 import Spinner from '../Spinner';
+import FlexWrapper from '../../FlexWrapper';
+import ContainerSmall from '../../ContainerSmall';
+import ConatinerMedium from '../../ContainerMedium';
+import ContainerLarge from '../../ContainerLarge';
+import './PlaidButton.css'
 
 interface IAccountsProps {
     accounts: any[],
@@ -35,31 +40,11 @@ interface IPlaidMetadata {
 
 class Accounts extends Component<IAccountsProps> {
 
-    // static propTypes = {
-    //     logoutUser: PropTypes.func.isRequired,
-    //     getTransactions: PropTypes.func.isRequired,
-    //     addAccount: PropTypes.func.isRequired,
-    //     deleteAccount: PropTypes.func.isRequired,
-    //     accounts: PropTypes.array.isRequired,
-    //     plaid: PropTypes.object.isRequired,
-    //     user: PropTypes.object.isRequired
-    // }
 
     componentDidMount() {
         const { accounts } = this.props;
         this.props.getTransactions(accounts);
     }
-
-    handleOnSuccess = (token: string , metadata: IPlaidMetadata) => {
-        const { accounts } = this.props;
-        const plaidData = {
-            public_token: token,
-            metadata: metadata,
-            accounts: accounts
-        };
-        
-        this.props.addAccount(plaidData);
-    };
 
     onDeleteClick = (id: any) => {
         const { accounts } = this.props;
@@ -86,7 +71,7 @@ class Accounts extends Component<IAccountsProps> {
                 <button 
                 style={{ marginRight: '1rem' }} 
                 onClick={this.onDeleteClick.bind(this, account._id)}
-                className='btn btn-small btn-floating waves-effect waves-light hoverable red accent-3'
+                className='btn btn-lardge btn-floating waves-effect waves-light hoverable red accent-3'
                 >
                     <i className='material-icons'>delete</i>
                 </button>
@@ -154,54 +139,53 @@ class Accounts extends Component<IAccountsProps> {
                     <p className='grey-text text-darken-1'>
                             Hi, {user.name.split(' ')[0]}
                     </p>
-                    <h5>
-                        <b>Linked Accounts</b>
-                    </h5>
-                    <p className='grey-text text-darken-1'>
-                        Add or remove your bank accounts below
-                    </p>
-                    <ul>{accountItems}</ul>
-                    <PlaidLinkButton
-                        buttonProps={{
-                            className: 'btn btn-large waves-effect eaves-light hoverable blue accent-3 main-btn'
-                        }}
-                        plaidLinkProps={{
-                            clientName: 'Cygnet Finance',
-                            key: '3c16fb36fe08680b6ced44543c6b83',
-                            env: 'sandbox',
-                            product: ['transactions'],
-                            onSuccess: this.handleOnSuccess
-                        }}
-                        onScriptLoad={() => this.setState({ loaded: true })}
-                        >
-                            Add Account
-                        </PlaidLinkButton>
-                        <hr style={{ marginTop: '2rem', opacity: '0.2' }} />
-                        <h5>
-                            <b>Transactions</b>
-                        </h5>
-                        {transactionsLoading ? (
-                            <Spinner/>
-                        ) : (
-                            <React.Fragment key='key'>
+                    <FlexWrapper>
+                        <ConatinerMedium>
+                            Chart here
+                        </ConatinerMedium>
+                        <ContainerSmall>
+                            <h5>
+                                <b>Linked Accounts</b>
+                            </h5>
                             <p className='grey-text text-darken-1'>
-                                You have <b>{transactionsData.length} </b>
-                                transactions from your
-                                <b> {accounts.length}</b> linked
-                                {accounts.length > 1 ? (
-                                    <span> accounts </span>
-                                ) : (
-                                    <span> account </span>
-                                )}
-                                from the past {transactionsDays} days
+                                Add or remove your bank accounts below
                             </p>
-                            <MaterialTable
-                            columns={transactionsColumns}
-                            data={transactionsData}
-                            title='Search Transactions'
-                            />
-                            </React.Fragment>
-                        )}
+                            <ul>{accountItems}</ul>
+                            <PlaidButton label='Add Account'/>
+                        </ContainerSmall>
+                        <ContainerSmall>
+                            KPI here
+                        </ContainerSmall>
+                    </FlexWrapper>
+                    <FlexWrapper>
+                        <ContainerLarge>
+                            <h5>
+                                <b>Transactions</b>
+                            </h5>
+                            {transactionsLoading ? (
+                                <Spinner/>
+                            ) : (
+                                <React.Fragment key='key'>
+                                <p className='grey-text text-darken-1'>
+                                    You have <b>{transactionsData.length} </b>
+                                    transactions from your
+                                    <b> {accounts.length}</b> linked
+                                    {accounts.length > 1 ? (
+                                        <span> accounts </span>
+                                    ) : (
+                                        <span> account </span>
+                                    )}
+                                    from the past {transactionsDays} days
+                                </p>
+                                <MaterialTable
+                                columns={transactionsColumns}
+                                data={transactionsData}
+                                title='Search Transactions'
+                                />
+                                </React.Fragment>
+                            )}
+                        </ContainerLarge>
+                    </FlexWrapper>
                 </div>
             </div>
         );

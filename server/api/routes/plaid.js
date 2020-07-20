@@ -5,8 +5,6 @@ const express_1 = tslib_1.__importDefault(require("express"));
 const passport_1 = tslib_1.__importDefault(require("passport"));
 const PlaidController_1 = require("../Controllers/PlaidController");
 const router = express_1.default.Router();
-var ACCESS_TOKEN = null;
-var ITEM_ID = null;
 router.post('/accounts/add', passport_1.default.authenticate('jwt', { session: false }), PlaidController_1.addPlaidAccount);
 router.delete('/accounts/:id', passport_1.default.authenticate('jwt', { session: false }), PlaidController_1.deletePlaidAccount);
 router.get('/accounts', passport_1.default.authenticate('jwt', { session: false }), PlaidController_1.fetchPlaidAccounts);

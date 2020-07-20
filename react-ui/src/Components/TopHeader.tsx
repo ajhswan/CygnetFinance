@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+class TopHeader extends Component {
+    render() {
+        return (
+            <StyledHeader>
+                <Link href='/'><Icon className='material-icons'>all_inclusive</Icon>CYGNET FINANCE</Link>
+            </StyledHeader>
+        )
+    }
+}
+
+export default TopHeader;
+
 const StyledHeader = styled.div`
     position: relative;
     width 100%;
@@ -21,19 +33,5 @@ margin-right: 5px;
 
 const Link = styled.a`
 color: #ffffff;`
-
-
-class TopHeader extends Component {
-    render() {
-        return (
-            <StyledHeader>
-                <Link href='/'><Icon className='material-icons'>all_inclusive</Icon>CYGNET FINANCE</Link>
-            </StyledHeader>
-        )
-    }
-}
-
-export default TopHeader;
-
 
 

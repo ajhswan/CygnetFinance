@@ -1,27 +1,25 @@
 
 import express, { Request, Response } from 'express';
 import plaid from 'plaid';
-// import passport from 'passport';
 import moment from 'moment';
-// import mongoose from 'mongoose';
 import { IRequest } from '../../types';
-// const router = express.Router();
 
 
 import { Account } from '../../models/Account';
-import { User } from '../../models/User';
 //HARD CODED NEED TO SETUP DOTENV AND MOVE INTO .ENV FILE
 const PLAID_CLIENT_ID = "5eeb93a5c72d7b0013b91f98";
-const PLAID_SECRET = "42fb58da0c3748d845abb2f5b0d3af";
+const PLAID_SECRET = "6ec814e2bbef73729ac7dd0191d505";
 const PLAID_PUBLIC_KEY = "3c16fb36fe08680b6ced44543c6b83";
-const PLAID_ENV = "sandbox";
+const PLAID_ENV = "development";
+
+console.log(PLAID_CLIENT_ID, PLAID_SECRET, PLAID_PUBLIC_KEY);
 
 const client = new plaid.Client(
   PLAID_CLIENT_ID,
   PLAID_SECRET,
   PLAID_PUBLIC_KEY,
   plaid.environments[PLAID_ENV],
-  { version: "2019-05-29" }
+  { version: "2019-05-29", clientApp: "Cygnet Finance" }
 );
 var ACCESS_TOKEN: any = null;
 var PUBLIC_TOKEN = null;
@@ -66,7 +64,6 @@ export function newAccount(request: IRequest, response: Response): void {
 }
 
 export function deleteAccount(request: Request, response: Response) {
-    console.log(request.params)
     Account.findById(request.params.id)
     .then(account => {
         account?.remove()
@@ -89,8 +86,6 @@ export function fetchTransactions(request: Request, response: Response) {
     let transactions: plaid.Transaction[] | any = [];
 
     const accounts = request.body;
-    console.log(accounts);
-    
 
     if (accounts) {
         accounts.forEach(function(account: any) {
@@ -100,7 +95,6 @@ export function fetchTransactions(request: Request, response: Response) {
             client
             .getTransactions(ACCESS_TOKEN, thirtyDaysAgo, today)
             .then(result => {
-                console.log(result);
                 transactions.push({
                     accountName: institutionName,
                     transactions: result.transactions
@@ -144,8 +138,5 @@ export function getPlaidTransactions(request: Request, response: Response) {
         },
     function(error, transactionsResponse) {
         response.json({ transactions: transactionsResponse });
-        // TRANSACTIONS LOGGED BELOW! 
-        // They will show up in the terminal that you are running nodemon in.
-        console.log(transactionsResponse);
     });
 }

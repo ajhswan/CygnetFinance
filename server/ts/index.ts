@@ -1,5 +1,6 @@
 
 import express from 'express';
+require('dotenv').config();
 const path = require('path');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
@@ -32,6 +33,7 @@ if (!isDev && cluster.isMaster) {
     
     const plaid = require('./api/routes/plaid');
     const users = require('./api/routes/users');
+  
 
     app.use(cors());
     app.use(bodyParser.urlencoded({ extended: false }));

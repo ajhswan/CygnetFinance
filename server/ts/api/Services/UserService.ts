@@ -2,9 +2,7 @@ import { Request, Response } from 'express';
 import { User } from '../../models/User';
 import bcrypt from 'bcryptjs';
 import { sanatizeData } from '../Services/ValidationService'
-import { ExtractJwt } from 'passport-jwt';
 import jwt from 'jsonwebtoken';
-// const keys = require('../../config/keys');
 import  { keys }  from '../../config/keys';
 
 export function createNewUser (request: Request, response: Response) {

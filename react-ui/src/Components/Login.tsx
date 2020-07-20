@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import './Form.css';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginUser } from '../actions/authActions';
 import classnames from 'classnames';
@@ -25,12 +24,6 @@ interface ILoginState {
 }
 
 class Login extends Component<ILoginProps, ILoginState> {
-
-    // static propTypes = {
-    //     loginUser: PropTypes.func.isRequired,
-    //     auth: PropTypes.object.isRequired,
-    //     errors: PropTypes.object.isRequired 
-    // }
 
     constructor (props: any) {
         super(props);

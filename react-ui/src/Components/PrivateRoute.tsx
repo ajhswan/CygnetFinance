@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Redirect, RouteProps } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
 
 interface IPrivateRouteProps extends RouteProps {
     component: any,
@@ -17,9 +16,6 @@ const PrivateRoute = ({ component: Component, auth, ...rest }: IPrivateRouteProp
         />
 );
 
-// PrivateRoute.propTypes = {
-//     auth: PropTypes.object.isRequired
-// };
 
 const mapStateToProps = (state:any) => ({
     auth: state.auth

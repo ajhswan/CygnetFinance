@@ -6,10 +6,11 @@ const plaid_1 = tslib_1.__importDefault(require("plaid"));
 const moment_1 = tslib_1.__importDefault(require("moment"));
 const Account_1 = require("../../models/Account");
 const PLAID_CLIENT_ID = "5eeb93a5c72d7b0013b91f98";
-const PLAID_SECRET = "42fb58da0c3748d845abb2f5b0d3af";
+const PLAID_SECRET = "6ec814e2bbef73729ac7dd0191d505";
 const PLAID_PUBLIC_KEY = "3c16fb36fe08680b6ced44543c6b83";
-const PLAID_ENV = "sandbox";
-const client = new plaid_1.default.Client(PLAID_CLIENT_ID, PLAID_SECRET, PLAID_PUBLIC_KEY, plaid_1.default.environments[PLAID_ENV], { version: "2019-05-29" });
+const PLAID_ENV = "development";
+console.log(PLAID_CLIENT_ID, PLAID_SECRET, PLAID_PUBLIC_KEY);
+const client = new plaid_1.default.Client(PLAID_CLIENT_ID, PLAID_SECRET, PLAID_PUBLIC_KEY, plaid_1.default.environments[PLAID_ENV], { version: "2019-05-29", clientApp: "Cygnet Finance" });
 var ACCESS_TOKEN = null;
 var PUBLIC_TOKEN = null;
 var ITEM_ID = null;
@@ -47,7 +48,6 @@ function newAccount(request, response) {
 }
 exports.newAccount = newAccount;
 function deleteAccount(request, response) {
-    console.log(request.params);
     Account_1.Account.findById(request.params.id)
         .then(account => {
         account === null || account === void 0 ? void 0 : account.remove().then(() => response.json({ success: true }));
@@ -67,7 +67,6 @@ function fetchTransactions(request, response) {
     const thirtyDaysAgo = now.subtract(30, 'days').format('YYYY-MM-DD');
     let transactions = [];
     const accounts = request.body;
-    console.log(accounts);
     if (accounts) {
         accounts.forEach(function (account) {
             const ACCESS_TOKEN = account.accessToken;
@@ -75,7 +74,6 @@ function fetchTransactions(request, response) {
             client
                 .getTransactions(ACCESS_TOKEN, thirtyDaysAgo, today)
                 .then(result => {
-                console.log(result);
                 transactions.push({
                     accountName: institutionName,
                     transactions: result.transactions
@@ -113,7 +111,6 @@ function getPlaidTransactions(request, response) {
         offset: 0
     }, function (error, transactionsResponse) {
         response.json({ transactions: transactionsResponse });
-        console.log(transactionsResponse);
     });
 }
 exports.getPlaidTransactions = getPlaidTransactions;

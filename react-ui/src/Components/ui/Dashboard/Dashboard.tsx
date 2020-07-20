@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import PlaidLinkButton from 'react-plaid-link-button';
-import PropTypes from 'prop-types';
+// import PlaidLinkButton from 'react-plaid-link-button';
+// import { PlaidLink } from 'react-plaid-link';
+// import PropTypes from 'prop-types';
+import PlaidButton from '../PlaidButton';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../../actions/authActions';
 import { getAccounts, addAccount } from '../../../actions/accountActions';
 import Accounts from './Accounts';
 import Spinner from '../Spinner';
+import './PlaidButton.css'
 
 interface IDashboardProps {
     logoutUser: Function,
@@ -17,14 +20,6 @@ interface IDashboardProps {
 
 class Dashboard extends Component<IDashboardProps> {
 
-    // static propTypes = {
-    //     logoutUser: PropTypes.func.isRequired,
-    //     getAccounts: PropTypes.func.isRequired,
-    //     addAccount: PropTypes.func.isRequired,
-    //     plaid: PropTypes.object.isRequired,
-    //     auth: PropTypes.object.isRequired
-    // };
-
     componentDidMount() {
         this.props.getAccounts();
     }
@@ -34,18 +29,9 @@ class Dashboard extends Component<IDashboardProps> {
         this.props.logoutUser();
     };
 
-    handleOnSuccess = (token: string, metadata: unknown) => {
-        const plaidData = {
-            public_token: token,
-            metadata: metadata
-        };
-        this.props.addAccount(plaidData);
-    }
-
     render() {
         const { user } = this.props.auth;
         const { accounts, accountsLoading } = this.props.plaid;
-        let dashboardContent;
 
         if (accounts === null || accountsLoading) {
             return <Spinner />;
@@ -62,19 +48,7 @@ class Dashboard extends Component<IDashboardProps> {
                             To get started, link your a bank account below
                         </p>
                         <div>
-                            <PlaidLinkButton buttonProps={{
-                                className:'btn btn-larg waves-effect waves-light hoverable blue accent-3 main-btn'
-                            }}
-                            plaidLinkProps={{
-                                clientName: 'Cygnet Finance',
-                                key: '3c16fb36fe08680b6ced44543c6b83',
-                                env: 'sandbox',
-                                product: ['transactions'],
-                                onSuccess: this.handleOnSuccess
-                            }}
-                            onScriptLoad={() => this.setState({ loaded: true })}>
-                                Link Account
-                            </PlaidLinkButton>
+                            <PlaidButton label='Link Account'/>
                         </div>
                         <button onClick={this.onLogoutClick} className='btn btn-large waves-effect waves-light hoverable red accent-3 main-btn'>
                             Logout
@@ -82,10 +56,7 @@ class Dashboard extends Component<IDashboardProps> {
                     </div>
                 </div>
             );
-        }
-
-        // return <div className='container'>{dashboardContent}</div>;
-        
+        }        
     }
 }
 

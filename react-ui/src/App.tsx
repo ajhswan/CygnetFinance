@@ -26,7 +26,6 @@ if (localStorage.jwtToken) {
         
         window.location.href = './login';
     }
-
 }
 
 class App extends Component {
@@ -61,7 +60,7 @@ margin: 0 auto;
 
 const StyledDiv = styled.div`
 overflow: auto;
-width: 600px;
+width: 1200px;
 margin: 0 auto;
 // border: 2px dotted red;`;
 
